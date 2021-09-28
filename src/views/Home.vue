@@ -41,7 +41,7 @@
         <p>10</p>
         <p>15</p>
       </div>
-      <TableClients />
+      <TableClients patients="patients" />
     </section>
   </div>
 </template>

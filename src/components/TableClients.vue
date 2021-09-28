@@ -110,7 +110,9 @@ import patients from '@/data/patients.json';
 <script>
 export default {
   name: "TableClient",
-  components: {},
+  props: {
+
+  },
   data() {
     return {
       patients: "",
