@@ -10,7 +10,7 @@
           </div>
         </div>
         <div class="header-buttons">
-          <button>
+          <button @click="create">
             <img src="@/assets/icons/plus.svg" />
             Nuevo Paciente
           </button>
@@ -35,55 +35,56 @@
     </header>
     <section>
       <div class="show">
-        <img src="@/assets/icons/menu.svg" />
-        <img src="@/assets/icons/grid.svg" />
+        <img src="@/assets/icons/menu.svg" @click="show('table')" />
+        <img src="@/assets/icons/grid.svg" @click="show('grid')" />
         <p>5</p>
         <p>10</p>
         <p>15</p>
       </div>
-      <TableClients patients="patients" />
+      <span v-if="table">
+        <TableClients :search="search" />
+      </span>
+      <span v-if="grid">
+        <ClientCard />
+      </span>
     </section>
   </div>
 </template>
 
 <script>
-import patients from "@/data/patients.json";
-import TableClients from "@/components/TableClients.vue";
+import TableClients from '@/components/TableClients.vue'
+import ClientCard from '@/components/ClientCard.vue'
 
 export default {
-  name: "Home",
+  name: 'Home',
   components: {
     TableClients,
+    ClientCard,
   },
   data() {
     return {
-      patients: patients,
-      search: "",
-    };
+      search: '',
+      table: true,
+      grid: false,
+    }
   },
-  computed: {
-    filteredPatients: function () {
-      return this.patients.filter((client) => {
-        const patient = client.datos_cliente;
-        const { nombre, apellidos } = patient;
-        console.log(patient);
-        const search = this.search
-          .normalize("NFD")
-          .replace(/[\u0300-\u036f]/g, "");
-        const text = [nombre, apellidos]
-          .filter((value) => value)
-          .join("")
-          .toLowerCase()
-          .normalize("NFD")
-          .replace(/[\u0300-\u036f]/g, "");
-        if (!text.match(search.toLowerCase())) {
-          return false;
-        }
-        return true;
-      });
+  methods: {
+    create() {
+      this.$store.dispatch('drawers/fixed')
+      this.$store.dispatch('drawers/open', { component: 'modal-new' })
+    },
+    show(display) {
+      if (display === 'table') {
+        this.table = true
+        this.grid = false
+      }
+      if (display === 'grid') {
+        this.grid = true
+        this.table = false
+      }
     },
   },
-};
+}
 </script>
 
 <style scoped>
@@ -168,7 +169,7 @@ p {
 .search input {
   width: 100%;
   padding: 1rem;
-  background-image: require("@/assets/icons/search.svg");
+  background-image: require('@/assets/icons/search.svg');
   background-repeat: no-repeat;
   background-size: 18px 18px;
   background-position: center;

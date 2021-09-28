@@ -11,5 +11,7 @@ export default {
 
 <style scoped>
 .client-card {
+  width: 100%;
+  background-color: red;
 }
 </style>

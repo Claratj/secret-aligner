@@ -108,17 +108,19 @@ import patients from '@/data/patients.json';
 </template>
 
 <script>
-export default {
-  name: "TableClient",
-  props: {
+import patients from '@/data/patients.json'
 
+export default {
+  name: 'TableClient',
+  props: {
+    search: String,
   },
   data() {
     return {
-      patients: "",
-    };
+      patients: patients,
+    }
   },
-};
+}
 </script>
 
 <style>
