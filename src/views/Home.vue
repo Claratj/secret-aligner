@@ -39,26 +39,13 @@
             </th>
             <th class="table-title">Clínica</th>
             <th class="table-title">
-              Dirección
+              Objetivo Tratamiento
               <span class="sort-buttons">
                 <img src="@/assets/icons/chevron-up.svg" />
                 <img src="@/assets/icons/chevron-down.svg" />
               </span>
             </th>
-            <th class="table-title">
-              Dentista
-              <span class="sort-buttons">
-                <img src="@/assets/icons/chevron-up.svg" />
-                <img src="@/assets/icons/chevron-down.svg" />
-              </span>
-            </th>
-            <th class="table-title">
-              Distribuidor
-              <span class="sort-buttons">
-                <img src="@/assets/icons/chevron-up.svg" />
-                <img src="@/assets/icons/chevron-down.svg" />
-              </span>
-            </th>
+
             <th class="table-title">
               Estado
               <span class="sort-buttons">
@@ -69,16 +56,50 @@
             <th class="table-title">Acciones</th>
           </tr>
         </thead>
-        <tbody></tbody>
+        <tbody>
+          <tr
+            v-for="(patient, index) in patients"
+            :key="index"
+            class="table-list"
+          >
+            <td>
+              {{ patient.datos_paciente.nombre }},
+              {{ patient.datos_paciente.apellidos }}
+            </td>
+            <td>
+              {{ patient.ficha_dental.clinica }}
+            </td>
+            <td>
+              {{ patient.ficha_dental.objetivo_tratamiento }}
+            </td>
+            <td>
+              {{ patient.ficha_dental.estado }}
+            </td>
+            <td>
+              <select name="" id="">
+                <option>Acciones</option>
+                <option>Editar</option>
+                <option>Finalizar</option>
+                <option>Borrar</option>
+              </select>
+            </td>
+          </tr>
+        </tbody>
       </table>
     </section>
   </div>
 </template>
 
 <script>
+import patients from "@/data/patients.json";
 export default {
   name: "Home",
   components: {},
+  data() {
+    return {
+      patients: patients,
+    };
+  },
 };
 </script>
 
@@ -146,5 +167,9 @@ table tr {
 }
 .sort-buttons img {
   height: 1rem;
+}
+.table-list {
+  display: flex;
+  flex-direction: flex-row;
 }
 </style>
