@@ -1,21 +1,36 @@
 <template>
   <div class="home">
     <header>
-      <div class="patient">
-        <div>
+      <div class="header-title">
+        <div class="header-card">
           <img src="@/assets/icons/card.svg" />
-        </div>
-        <div class="patient-options">
-          <h1>Listado de pacientes</h1>
-          <p>Visualización de pacientes</p>
-          <div class="patient-buttons">
-            <button>Nuevo Paciente</button>
-            <button>Descargar CSV</button>
+          <div class="patient-options">
+            <h1>Listado de pacientes</h1>
+            <p>Visualización de pacientes</p>
           </div>
         </div>
+        <div class="header-buttons">
+          <button>
+            <img src="@/assets/icons/plus.svg" />
+            Nuevo Paciente
+          </button>
+          <button>
+            <img src="@/assets/icons/file.svg" />
+            Descargar CSV
+          </button>
+        </div>
       </div>
-      <label for="search">
-        <input type="text" id="search" />
+
+      <label for="search" class="search">
+        <div class="search-icon">
+          <img src="@/assets/icons/search.svg" />
+        </div>
+        <input
+          type="text"
+          id="search"
+          placeholder="Buscar..."
+          v-model="search"
+        />
       </label>
     </header>
     <section>
@@ -26,123 +41,47 @@
         <p>10</p>
         <p>15</p>
       </div>
-      <table>
-        <thead>
-          <tr>
-            <th class="table-title">
-              Nombre y Apellidos
-              <span class="sort-buttons">
-                <img src="@/assets/icons/chevron-up.svg" />
-                <img src="@/assets/icons/chevron-down.svg" />
-              </span>
-            </th>
-            <th class="table-title">Clínica</th>
-            <th class="table-title">
-              Objetivo Tratamiento
-              <span class="sort-buttons">
-                <img src="@/assets/icons/chevron-up.svg" />
-                <img src="@/assets/icons/chevron-down.svg" />
-              </span>
-            </th>
-
-            <th class="table-title">
-              Estado
-              <span class="sort-buttons">
-                <img src="@/assets/icons/chevron-up.svg" />
-                <img src="@/assets/icons/chevron-down.svg" />
-              </span>
-            </th>
-            <th class="table-title">Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(patient, index) in patients" :key="index">
-            <td>
-              <span class="table-card">
-                <figure class="avatar">
-                  <img src="@/assets/icons/avatar.svg" />
-                </figure>
-                <figcaption class="table-content-name">
-                  <span>
-                    {{ patient.datos_paciente.nombre }},
-                    {{ patient.datos_paciente.apellidos }}
-                  </span>
-                  <span class="birthday">
-                    <img src="@/assets/icons/calendar.svg" />
-                    {{ patient.datos_paciente.fecha_nacimiento }}
-                  </span>
-                </figcaption>
-              </span>
-            </td>
-            <td class="table-content">
-              {{ patient.ficha_dental.clinica }}
-            </td>
-            <td class="table-content">
-              {{ patient.ficha_dental.objetivo_tratamiento }}
-            </td>
-            <td class="table-content">
-              <div
-                v-if="patient.ficha_dental.estado === 'solicitado'"
-                class="status-gray"
-              >
-                Solicitado
-              </div>
-              <div
-                v-if="patient.ficha_dental.estado === 'facturado'"
-                class="status-green"
-              >
-                Facturado
-              </div>
-
-              <div
-                v-if="patient.ficha_dental.estado === 'planificando'"
-                class="status-orange"
-              >
-                Planificando
-              </div>
-              <div
-                v-if="patient.ficha_dental.estado === 'fabricando'"
-                class="status-blue"
-              >
-                Fabricando
-              </div>
-              <div
-                v-if="patient.ficha_dental.estado === 'enviado'"
-                class="status-green"
-              >
-                Enviado
-              </div>
-              <div
-                v-if="patient.ficha_dental.estado === 'aceptado'"
-                class="status-green"
-              >
-                Aceptado
-              </div>
-            </td>
-            <td class="table-content table-actions">
-              <select name="" id="">
-                <option value="" disabled>Acciones</option>
-                <option value="edit">Editar</option>
-                <option value="finish">Finalizar</option>
-                <option value="delete">Borrar</option>
-              </select>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <TableClients />
     </section>
   </div>
 </template>
 
 <script>
 import patients from "@/data/patients.json";
+import TableClients from "@/components/TableClients.vue";
+
 export default {
   name: "Home",
-  components: {},
+  components: {
+    TableClients,
+  },
   data() {
     return {
       patients: patients,
+      search: "",
     };
+  },
+  computed: {
+    filteredPatients: function () {
+      return this.patients.filter((client) => {
+        const patient = client.datos_cliente;
+        const { nombre, apellidos } = patient;
+        console.log(patient);
+        const search = this.search
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "");
+        const text = [nombre, apellidos]
+          .filter((value) => value)
+          .join("")
+          .toLowerCase()
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "");
+        if (!text.match(search.toLowerCase())) {
+          return false;
+        }
+        return true;
+      });
+    },
   },
 };
 </script>
@@ -154,7 +93,53 @@ header {
   justify-content: space-between;
   align-items: center;
 }
-
+h1 {
+  margin: 0;
+}
+p {
+  margin: 0;
+  padding: 0.4rem 0;
+}
+.header-title {
+  display: flex;
+  flex-direction: column;
+}
+.header-card {
+  padding: 1rem 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-align: left;
+}
+.header-card img {
+  width: 2rem;
+  padding-right: 1rem;
+}
+.header-buttons {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-shrink: 0;
+}
+.header-buttons button {
+  width: 12rem;
+  padding: 0.5rem 1rem;
+  margin: 1rem 1rem 1rem 0;
+  background-color: white;
+  color: blue;
+  border: 2px solid blue;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+}
+.header-buttons button:hover {
+  background-color: blue;
+  color: white;
+}
 .home {
   width: 70%;
   padding: 2rem;
@@ -163,6 +148,8 @@ header {
 }
 
 .patient {
+  background-color: whitesmoke;
+  width: 50%;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -171,87 +158,39 @@ header {
   display: flex;
   flex-direction: column;
 }
-.patient-button {
+
+.search {
+  width: 40%;
+  margin-right: 2rem;
+  height: 1rem;
+  display: relative;
+}
+.search input {
   width: 100%;
   padding: 1rem;
-  background-color: green;
-  display: flex;
-  justify-content: space-between;
+  background-image: require("@/assets/icons/search.svg");
+  background-repeat: no-repeat;
+  background-size: 18px 18px;
+  background-position: center;
+  border-radius: 10px;
+  background-color: lightsteelblue;
 }
+
 .show {
-  display: flex;
-  flex-direction: row;
-}
-table {
-  width: 100%;
-  margin: 0 auto;
-  border: none;
-}
-table tr {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-tbody {
-  border-left: 1px solid #6666;
-}
-
-.table-title {
-  padding: 3 0;
-  text-align: center;
+  margin: 1rem 0;
+  padding: 0 2rem;
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
 }
-.sort-buttons {
+.show img {
   padding: 0 0.4rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  cursor: pointer;
 }
-.sort-buttons img {
-  height: 1rem;
-}
-
-.table-content {
-  display: flex;
-  flex-direction: flex-row;
-  align-items: center;
-  justify-content: center;
-}
-.table-card {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-items: flex-start;
-}
-.table-content-name {
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-}
-.birthday {
-  color: #6666;
-  display: flex;
-  align-items: center;
-}
-
-figure {
-  background-color: #4d4d4d;
-  width: 2rem;
-  height: 2rem;
-  border-radius: 100%;
-}
-th {
-  width: 100%;
-  padding: 0.8rem;
-  border-bottom: 1px solid #6666;
-}
-td {
-  width: 100%;
-  padding: 0.4rem 0;
-  border-bottom: 2px solid #6666;
+.show p {
+  padding: 0 0.4rem;
+  font-weight: 700;
+  font-size: 1.2rem;
+  cursor: pointer;
 }
 </style>
