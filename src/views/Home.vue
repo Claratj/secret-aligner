@@ -43,8 +43,9 @@
         <ClientCard />
       </span>
     </section>
-    <div class="modal-bg" v-if="isNewPatientOpen">
-      <router-view />
+    <div v-if="isOpen">
+      <div class="modal-bg" />
+      <NewClient />
     </div>
   </div>
 </template>
@@ -53,18 +54,21 @@
 import patients from "@/data/patients.json";
 import TableClients from "@/components/TableClients.vue";
 import ClientCard from "@/components/ClientCard.vue";
+import NewClient from "@/components/NewClient.vue";
 
 export default {
   name: "Home",
   components: {
     TableClients,
-    ClientCard
+    ClientCard,
+    NewClient
   },
   data() {
     return {
       search: "",
       table: true,
       grid: false,
+      isOpen: true,
       number: "",
       patients: patients
     };
@@ -72,8 +76,8 @@ export default {
 
   methods: {
     create() {
-      this.$store.dispatch("drawers/fixed");
-      this.$store.dispatch("drawers/open", { component: "modal-new" });
+      this.isOpen = true;
+      console.log(this.isOpen);
     },
     convertToCSV(obj) {
       const newObject = typeof obj != "object" ? JSON.parse(obj) : obj;
@@ -286,5 +290,15 @@ p {
   font-weight: 700;
   font-size: 1.2rem;
   cursor: pointer;
+}
+.modal-bg {
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  background-color: black;
+  opacity: 0.3;
 }
 </style>
