@@ -220,19 +220,6 @@ button {
   color: white;
   cursor: pointer;
 }
-.green:hover {
-  background-color: #00c49a;
-  color: white;
-}
-.green {
-  background-color: white;
-  color: #00c49a;
-  border: 2px solid #00c49a;
-}
-.red:hover {
-  background-color: #d7263d;
-  color: white;
-}
 .red {
   background-color: white;
   color: #d7263d;
@@ -246,5 +233,18 @@ button {
   background-color: white;
   color: #339dff;
   border: 2px solid #339dff;
+}
+.green:hover {
+  background-color: #00c49a;
+  color: white;
+}
+.green {
+  background-color: white;
+  color: #00c49a;
+  border: 2px solid #00c49a;
+}
+.red:hover {
+  background-color: #d7263d;
+  color: white;
 }
 </style>

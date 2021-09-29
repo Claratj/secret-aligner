@@ -21,4 +21,13 @@
   padding: 30px;
   background-color: black;
 }
+
+button {
+  width: 100px;
+  padding: 0.8rem;
+  border-radius: 5px;
+  border: none;
+  font-weight: 700;
+  cursor: pointer;
+}
 </style>

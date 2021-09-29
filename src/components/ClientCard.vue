@@ -35,9 +35,9 @@
         </div>
       </div>
       <div class="actions">
-        <button value="edit">Editar</button>
-        <button value="finish">Finalizar</button>
-        <button value="delete">Borrar</button>
+        <button value="edit" class="blue">Editar</button>
+        <button value="finish" class="green">Finalizar</button>
+        <button value="delete" class="red">Borrar</button>
       </div>
     </div>
   </div>
@@ -113,7 +113,7 @@ p {
 }
 .actions {
   width: 100%;
-  margin-top: 0.4rem;
+  margin-top: 0.6rem;
   display: flex;
   justify-content: space-between;
 }
@@ -124,5 +124,32 @@ button {
   border: none;
   font-weight: 700;
   cursor: pointer;
+}
+.red {
+  background-color: white;
+  color: #d7263d;
+  border: 2px solid #d7263d;
+}
+.blue:hover {
+  background-color: #339dff;
+  color: white;
+}
+.blue {
+  background-color: white;
+  color: #339dff;
+  border: 2px solid #339dff;
+}
+.green:hover {
+  background-color: #00c49a;
+  color: white;
+}
+.green {
+  background-color: white;
+  color: #00c49a;
+  border: 2px solid #00c49a;
+}
+.red:hover {
+  background-color: #d7263d;
+  color: white;
 }
 </style>
