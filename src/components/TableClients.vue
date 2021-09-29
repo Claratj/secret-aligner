@@ -34,8 +34,8 @@
         <tr v-for="(patient, index) in patients" :key="index">
           <td>
             <span class="table-card">
-              <figure class="avatar">
-                <img src="@/assets/icons/avatar.svg" />
+              <figure>
+                <img src="@/assets/icons/avatar.svg" class="avatar" />
               </figure>
               <figcaption class="table-content-name">
                 <span>
@@ -65,7 +65,7 @@
           </td>
           <td class="table-content table-actions">
             <select name="" id="" class="actions">
-              <option value="" disabled>Acciones</option>
+              <option>Acciones</option>
               <option value="edit">Editar</option>
               <option value="finish">Finalizar</option>
               <option value="delete">Borrar</option>
@@ -148,7 +148,7 @@ export default {
 };
 </script>
 
-<style >
+<style>
 table {
   width: 100%;
   margin: 0 auto;
@@ -205,9 +205,15 @@ table tr {
 figure {
   flex-shrink: 0;
   background-color: #6666;
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 3.2rem;
+  height: 3.2rem;
+  align-items: center;
+  flex-shrink: 0;
   border-radius: 50%;
+}
+.avatar {
+  width: 3.2rem;
+  height: 3.2rem;
 }
 th {
   width: 100%;
@@ -219,7 +225,7 @@ td {
   padding: 0.4rem 0;
   border-bottom: 2px solid #6666;
 }
-.actions {
+select {
   border-radius: 5px;
   padding: 0.4rem;
   font-size: 1rem;
