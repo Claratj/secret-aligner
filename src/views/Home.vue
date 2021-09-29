@@ -15,7 +15,8 @@
             <img src="@/assets/icons/plus.svg" />
             Nuevo Paciente
           </button>
-          <button>
+
+          <button @click="downloadCSV" id="a2" download="file.csv">
             <img src="@/assets/icons/file.svg" />
             Descargar CSV
           </button>
@@ -46,6 +47,7 @@
 </template>
 
 <script>
+import patients from "@/data/patients.json";
 import TableClients from "@/components/TableClients.vue";
 import ClientCard from "@/components/ClientCard.vue";
 
@@ -60,13 +62,79 @@ export default {
       search: "",
       table: true,
       grid: false,
-      number: ""
+      number: "",
+      patients: patients
     };
   },
   methods: {
     create() {
       this.$store.dispatch("drawers/fixed");
       this.$store.dispatch("drawers/open", { component: "modal-new" });
+    },
+    convertToCSV(obj) {
+      const newObject = typeof obj != "object" ? JSON.parse(obj) : obj;
+      const newArray = [];
+
+      for (const key in newObject) {
+        if (Object.hasOwnProperty.call(newObject, key)) {
+          newArray.push(newObject[key]);
+        }
+      }
+
+      const csvString = [
+        [
+          "Nombre",
+          "Apellidos",
+          "Fecha de nacimiento",
+          "Sexo",
+          "Acadas tratamiento",
+          "Dientes no mover",
+          "Estado",
+          "Clínica",
+          "Objetivo tratamiento",
+          "Recorte alineadores",
+          "Alineadores pasivos",
+          "Secret retainer"
+        ],
+        ...newArray.map((item) => [
+          item.datos_paciente.nombre,
+          item.datos_paciente.apellidos,
+          item.datos_paciente.fecha_nacimiento,
+          item.datos_paciente.sexo,
+          item.ficha_dental.acadas_tratamiento,
+          item.ficha_dental.dientes_no_mover,
+          item.ficha_dental.estado,
+          item.ficha_dental.clinica,
+          item.ficha_dental.objetivo_tratamiento,
+          item.ficha_dental.otros_datos.recorte_alineadores,
+          item.ficha_dental.otros_datos.alineadores_pasivos,
+          item.ficha_dental.otros_datos.secretretainer
+        ])
+      ]
+        .map((e) => e.join(","))
+        .join("\n");
+
+      return csvString;
+    },
+    downloadCSV() {
+      const obj = JSON.stringify(this.patients);
+      const csv = this.convertToCSV(obj);
+      const exportedFileName = "pacientes.csv" || "export.csv";
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+      if (navigator.msSaveBlob) {
+        navigator.msSaveBlob(blob, exportedFileName);
+      } else {
+        const link = document.createElement("a");
+        if (link.download !== undefined) {
+          let url = URL.createObjectURL(blob);
+          link.setAttribute("href", url);
+          link.setAttribute("download", exportedFileName);
+          link.style.visibility = "hidden";
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        }
+      }
     },
     show(display) {
       if (display === "table") {
