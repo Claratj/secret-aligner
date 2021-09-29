@@ -150,7 +150,6 @@ p {
   width: 70%;
   padding: 2rem;
   margin: 0 auto;
-  background-color: pink;
 }
 
 .patient {

@@ -24,13 +24,12 @@
           {{ patient.ficha_dental.objetivo_tratamiento }}
         </span>
         <span>
-          <div v-if="patient.ficha_dental.estado === 'solicitado'" class="status-gray"> Solicitado </div>
-          <div v-if="patient.ficha_dental.estado === 'facturado'" class="status-green"> Facturado </div>
-
-          <div v-if="patient.ficha_dental.estado === 'planificando'" class="status-orange"> Planificando </div>
-          <div v-if="patient.ficha_dental.estado === 'fabricando'" class="status-blue"> Fabricando </div>
-          <div v-if="patient.ficha_dental.estado === 'enviado'" class="status-green"> Enviado </div>
-          <div v-if="patient.ficha_dental.estado === 'aceptado'" class="status-green"> Aceptado </div>
+          <div v-if="patient.ficha_dental.estado === 'solicitado'" class="status-solicitado"> Solicitado </div>
+          <div v-if="patient.ficha_dental.estado === 'facturado'" class="status-facturado"> Facturado </div>
+          <div v-if="patient.ficha_dental.estado === 'planificando'" class="status-planificado"> Planificando </div>
+          <div v-if="patient.ficha_dental.estado === 'fabricando'" class="status-fabricado"> Fabricando </div>
+          <div v-if="patient.ficha_dental.estado === 'enviado'" class="status-enviado"> Enviado </div>
+          <div v-if="patient.ficha_dental.estado === 'aceptado'" class="status-aceptado"> Aceptado </div>
         </span>
         <select name="" id="">
           <option value="" disabled>Acciones</option>
@@ -108,5 +107,66 @@ figcaption {
   border-radius: 5px;
   padding: 0.4rem;
   font-size: 1rem;
+}
+.status-solicitado {
+  width: 100px;
+  padding: 0.8rem;
+  margin: 0.4rem 0;
+  border-radius: 20px;
+  font-weight: 700;
+  text-align: center;
+  color: white;
+  background-color: #b6b8c9;
+}
+.status-enviado {
+  width: 100px;
+  padding: 0.8rem;
+  margin: 0.4rem 0;
+  border-radius: 20px;
+  font-weight: 700;
+  text-align: center;
+  color: white;
+  background-color: #f9c846;
+}
+.status-facturado {
+  width: 100px;
+  padding: 0.8rem;
+  margin: 0.4rem 0;
+  border-radius: 20px;
+  font-weight: 700;
+  text-align: center;
+  color: white;
+  background-color: #02a9ea;
+}
+
+.status-fabricado {
+  width: 100px;
+  padding: 0.8rem;
+  margin: 0.4rem 0;
+  border-radius: 20px;
+  font-weight: 700;
+  text-align: center;
+  color: white;
+  background-color: #541388;
+}
+.status-planificado {
+  width: 100px;
+  padding: 0.8rem;
+  margin: 0.4rem 0;
+  border-radius: 20px;
+  font-weight: 700;
+  text-align: center;
+  color: white;
+  background-color: #fc7a57;
+}
+.status-aceptado {
+  width: 100px;
+  padding: 0.8rem;
+  margin: 0.4rem 0;
+  border-radius: 20px;
+  font-weight: 700;
+  text-align: center;
+  color: white;
+  background-color: #00c49a;
 }
 </style>
