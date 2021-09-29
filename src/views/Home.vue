@@ -43,6 +43,9 @@
         <ClientCard />
       </span>
     </section>
+    <div class="modal-bg" v-if="isNewPatientOpen">
+      <router-view />
+    </div>
   </div>
 </template>
 
@@ -66,6 +69,7 @@ export default {
       patients: patients
     };
   },
+
   methods: {
     create() {
       this.$store.dispatch("drawers/fixed");
@@ -80,7 +84,6 @@ export default {
           newArray.push(newObject[key]);
         }
       }
-
       const csvString = [
         [
           "Nombre",
