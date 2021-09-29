@@ -13,20 +13,24 @@
         <input id="apellidos" type="text" placeholder="Apellidos" tabindex="2" v-model="apellidos" />
       </div>
       <div class="form-section row">
+        <label for="fecha_nacimiento" class="title">Fecha de nacimiento:</label>
+        <input id="fecha_nacimiento" type="date" class="date" tabindex="3" v-model="fecha_nacimiento" />
+      </div>
+      <div class="form-section row">
         <label class="title">Sexo: </label>
-        <select class="" v-model="sexo" tabindex="3">
+        <select v-model="sexo" tabindex="4">
           <option value="" disabled>Selecciona una opción</option>
           <option value="masculino">Masculino</option>
           <option value="femenino">Femenino</option>
         </select>
       </div>
       <div class="form-section row">
-        <label for="clinica" class="title">Clínica</label>
+        <label for="clinica" class="title">Clínica:</label>
         <input id="clinica" type="text" placeholder="Clínica" tabindex="5" v-model="clinica" />
       </div>
-      <div class="form-section">
-        <h2 for="type" class=""> Recorte alineadores </h2>
-        <ul class="">
+      <div>
+        <p for="type" class="title"> Recorte alineadores: </p>
+        <ul>
           <li>
             <input
               id="cuellos"
@@ -53,9 +57,9 @@
           </li>
         </ul>
       </div>
-      <div class="form-section">
-        <h2 for="type" class=""> Secret Retainer </h2>
-        <ul class="">
+      <div>
+        <p for="type" class="title"> Secret Retainer: </p>
+        <ul>
           <li>
             <input
               id="secretretainer"
@@ -124,62 +128,77 @@ export default {
 </script>
 
 <style scoped>
+* {
+  overflow: hidden;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
 .modal {
-  position: absolute;
+  position: fixed;
   top: 15%;
   left: 37.5%;
   margin-top: -50px;
   margin-left: -50px;
   width: 25%;
   height: fit-content;
-  padding: 2.5rem;
+  padding: 2rem;
   background-color: white;
-  border-radius: 40px;
+  border-radius: 30px;
 }
 header {
-  width: 100%;
+  margin: 0;
+  padding: 0;
   text-align: center;
 }
 form {
-  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 .form-section {
-  width: 80%;
+  width: 100%;
   padding: 0.4rem 0;
 }
 .row {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: flex-end;
+  flex-direction: column;
+}
+.date {
+  width: 95%;
+  padding: 0.6rem;
+  border-radius: 10px;
+  border: 1px solid black;
 }
 select {
-  width: 18rem;
+  width: 100%;
+  padding: 0.6rem;
+  border-radius: 10px;
 }
 #nombre,
 #apellidos,
 #clinica {
-  width: 18rem;
-  margin: 0.2rem 0 0 0.6rem;
-  padding: 0.4rem;
+  width: 95%;
+  padding: 0.6rem;
   border-radius: 10px;
-  background-color: #d9d9d9;
-  border: none;
+  border: 1px solid black;
   font-size: 1rem;
 }
 .title {
   font-weight: 700;
+  font-size: 1rem;
+  padding: 0.6rem 0;
 }
+
 li {
   list-style: none;
   display: flex;
   flex-direction: row;
+  align-items: center;
 }
 .check {
-  margin-right: 1rem;
+  width: fit-content;
+  margin: 0.4rem 1rem 0.4rem 0;
 }
 footer {
   width: 80%;
