@@ -17,8 +17,12 @@
         </figcaption>
       </div>
       <div class="card-info">
-        <span> Clínica:{{ patient.ficha_dental.clinica }} </span>
-        <span> Tratamiento: {{ patient.ficha_dental.objetivo_tratamiento }} </span>
+        <span>
+          <h4>Clínica:</h4><p>{{ patient.ficha_dental.clinica }}</p>
+        </span>
+        <span>
+          <h4>Tratamiento: </h4><p>{{ patient.ficha_dental.objetivo_tratamiento }} </p></span
+        >
         <span>
           <div v-if="patient.ficha_dental.estado === 'solicitado'" class="status-solicitado"> Solicitado </div>
           <div v-if="patient.ficha_dental.estado === 'facturado'" class="status-facturado"> Facturado </div>
@@ -89,8 +93,15 @@ figcaption {
   margin-left: 0.5rem;
   flex: 2;
 }
+h4 {
+  margin: 0;
+}
+p {
+  padding: 0;
+  margin: 0.4rem 0;
+}
 .card select {
-  max-width: 6.2rem;
+  margin: 0.4rem 0;
   border-radius: 5px;
   padding: 0.4rem;
   font-size: 1rem;
