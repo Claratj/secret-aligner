@@ -44,8 +44,8 @@
       </span>
     </section>
     <div v-if="isOpen">
-      <div class="modal-bg" @close="close" />
-      <NewClient />
+      <div class="modal-bg" />
+      <NewClient @close="close" />
     </div>
   </div>
 </template>
