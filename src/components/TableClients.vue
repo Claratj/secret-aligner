@@ -210,6 +210,7 @@ figure {
   align-items: center;
   flex-shrink: 0;
   border-radius: 50%;
+  margin-right: 1rem;
 }
 .avatar {
   width: 3.2rem;

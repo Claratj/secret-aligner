@@ -4,6 +4,9 @@
 </template>
 
 <style>
+* {
+  margin: 0;
+}
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -11,9 +14,6 @@
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   overflow: hidden;
-  width: 100%;
-  margin: 0;
-  padding: 0;
 }
 
 #nav {

@@ -87,7 +87,7 @@
 
       <footer>
         <button type="submit" class="green">Guardar</button>
-        <button class="red">Cancelar</button>
+        <button class="red" @click="cancel">Cancelar</button>
         <button class="blue" @click="clear">Limpiar</button>
       </footer>
     </form>
@@ -113,6 +113,9 @@ export default {
   },
   methods: {
     submit() {},
+    cancel() {
+      this.$emit("close");
+    },
     clear() {
       this.nombre = "";
       this.apellidos = "";
@@ -188,7 +191,6 @@ select {
   font-size: 1rem;
   padding: 0.6rem 0;
 }
-
 li {
   list-style: none;
   display: flex;

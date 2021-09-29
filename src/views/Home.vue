@@ -43,7 +43,7 @@
         <ClientCard />
       </span>
     </section>
-    <div v-if="isOpen">
+    <div v-if="isOpen" @close="close">
       <div class="modal-bg" />
       <NewClient />
     </div>
@@ -68,7 +68,7 @@ export default {
       search: "",
       table: true,
       grid: false,
-      isOpen: true,
+      isOpen: false,
       number: "",
       patients: patients
     };
@@ -77,7 +77,9 @@ export default {
   methods: {
     create() {
       this.isOpen = true;
-      console.log(this.isOpen);
+    },
+    close() {
+      this.isOpen = false;
     },
     convertToCSV(obj) {
       const newObject = typeof obj != "object" ? JSON.parse(obj) : obj;
