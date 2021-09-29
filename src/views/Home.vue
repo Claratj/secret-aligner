@@ -259,7 +259,7 @@ p {
   margin: 1rem;
   padding: 1rem 0 1rem;
   height: 1rem;
-  display: relative;
+  position: relative;
 }
 .search img {
   position: absolute;

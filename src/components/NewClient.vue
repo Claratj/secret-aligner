@@ -4,48 +4,48 @@
       <h1>Nuevo Paciente</h1>
     </header>
     <form enctype="multipart/form-data" @submit.prevent="submit">
-      <div class="form-section">
-        <label for="first_name" class="">Nombre</label>
-        <input id="nombre" type="text" class="" tabindex="1" v-model="nombre" ref="autofocus" />
+      <div class="form-section row">
+        <label for="first_name" class="title">Nombre:</label>
+        <input id="nombre" type="text" placeholder="Nombre" tabindex="1" v-model="nombre" ref="autofocus" />
       </div>
-      <div class="form-section">
-        <label for="last_name" class="">*Apellidos</label>
-        <input id="apellidos" type="text" class="" tabindex="2" v-model="apellidos" />
+      <div class="form-section row">
+        <label for="last_name" class="title">Apellidos:</label>
+        <input id="apellidos" type="text" placeholder="Apellidos" tabindex="2" v-model="apellidos" />
       </div>
-      <div class="form-section">
-        <label class="">{{ Sexo }}</label>
+      <div class="form-section row">
+        <label class="title">Sexo: </label>
         <select class="" v-model="sexo" tabindex="3">
           <option value="" disabled>Selecciona una opción</option>
           <option value="masculino">Masculino</option>
           <option value="femenino">Femenino</option>
         </select>
       </div>
-      <div class="form-section">
-        <label for="clinica" class="">Clínica</label>
-        <input id="clinica" type="text" class="" tabindex="5" v-model="clinica" />
+      <div class="form-section row">
+        <label for="clinica" class="title">Clínica</label>
+        <input id="clinica" type="text" placeholder="Clínica" tabindex="5" v-model="clinica" />
       </div>
       <div class="form-section">
         <h2 for="type" class=""> Recorte alineadores </h2>
         <ul class="">
-          <li class="">
+          <li>
             <input
               id="cuellos"
               value="Recortar a nivel de los cuellos"
               name="otros_datos"
               type="checkbox"
-              class=""
+              class="check"
               v-model="otros_datos.recorte_alineadores"
               tabindex="6"
             />
             <label for="cuellos" class=""> Recortar a nivel de los cuellos </label>
           </li>
-          <li class="">
+          <li>
             <input
               id="encia"
               value="Recortar dejando 1-3mm de encía"
               name="otros_datos"
               type="checkbox"
-              class=""
+              class="check"
               v-model="otros_datos.recorte_alineadores"
               tabindex="7"
             />
@@ -56,23 +56,23 @@
       <div class="form-section">
         <h2 for="type" class=""> Secret Retainer </h2>
         <ul class="">
-          <li class="">
+          <li>
             <input
               id="secretretainer"
               name="secretretainer"
               type="checkbox"
-              class=""
+              class="check"
               v-model="otros_datos.secretretainer"
               tabindex="8"
             />
             <label for="secretretainer" class="">Secret Retainer</label>
           </li>
-          <li class="">
+          <li>
             <input
               id="alineadores_pasivos"
               name="alineadores_pasivos"
               type="checkbox"
-              class=""
+              class="check"
               v-model="otros_datos.alineadores_pasivos"
               tabindex="9"
             />
@@ -114,7 +114,7 @@ export default {
       this.apellidos = "";
       this.fecha_nacimiento = "";
       this.sexo = "";
-      this.clínica = "";
+      this.clinica = "";
       this.otros_datos.recorte_alineadores = [];
       this.otros_datos.alineadores_pasivos = "";
       this.otros_datos.secretretainer = "";
@@ -126,12 +126,13 @@ export default {
 <style scoped>
 .modal {
   position: absolute;
-  top: 25%;
-  left: 35%;
+  top: 15%;
+  left: 37.5%;
   margin-top: -50px;
   margin-left: -50px;
-  width: 30%;
-  padding: 3rem;
+  width: 25%;
+  height: fit-content;
+  padding: 2.5rem;
   background-color: white;
   border-radius: 40px;
 }
@@ -146,18 +147,47 @@ form {
   align-items: center;
 }
 .form-section {
-  width: 70%;
-  margin: 0 auto;
-  background-color: blue;
+  width: 80%;
+  padding: 0.4rem 0;
+}
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+select {
+  width: 18rem;
+}
+#nombre,
+#apellidos,
+#clinica {
+  width: 18rem;
+  margin: 0.2rem 0 0 0.6rem;
+  padding: 0.4rem;
+  border-radius: 10px;
+  background-color: #d9d9d9;
+  border: none;
+  font-size: 1rem;
+}
+.title {
+  font-weight: 700;
+}
+li {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+}
+.check {
+  margin-right: 1rem;
 }
 footer {
-  width: 70%;
+  width: 80%;
   margin: 1rem 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-
 button {
   width: 100px;
   padding: 0.8rem;
