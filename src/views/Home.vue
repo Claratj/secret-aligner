@@ -1,12 +1,13 @@
 <template>
   <div class="home">
+    <div class="subnav">Listado de Pacientes</div>
     <header>
       <div class="header-title">
         <div class="header-card">
           <img src="@/assets/icons/card.svg" />
           <div class="patient-options">
             <h1>Listado de pacientes</h1>
-            <p>Visualización de pacientes</p>
+            <p>Visualización de Pacientes</p>
           </div>
         </div>
         <div class="header-buttons">
@@ -22,9 +23,7 @@
       </div>
 
       <label for="search" class="search">
-        <div class="search-icon">
-          <img src="@/assets/icons/search.svg" />
-        </div>
+        <img src="@/assets/icons/search.svg" />
         <input type="text" name="search" id="search" placeholder="Buscar..." v-model="search" />
       </label>
     </header>
@@ -93,11 +92,19 @@ export default {
 </script>
 
 <style scoped>
+.subnav {
+  width: 100%;
+  height: 60px;
+  padding-left: 2rem;
+  display: flex;
+  align-items: center;
+  background-color: #d9d9d9;
+}
 header {
   width: 100%;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
 }
 h1 {
   margin: 0;
@@ -111,7 +118,7 @@ p {
   flex-direction: column;
 }
 .header-card {
-  padding: 1rem 0;
+  padding: 1.6rem 0 1rem;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -129,11 +136,11 @@ p {
 }
 .header-buttons button {
   width: 12rem;
-  padding: 0.5rem 1rem;
+  padding: 0.8rem 1rem;
   margin: 1rem 1rem 1rem 0;
   background-color: white;
-  color: blue;
-  border: 2px solid blue;
+  color: #339dff;
+  border: 2px solid #339dff;
   border-radius: 5px;
   display: flex;
   align-items: center;
@@ -142,13 +149,21 @@ p {
   font-size: 1rem;
   cursor: pointer;
 }
+.header-buttons button img {
+  padding-right: 0.2rem;
+  height: 1rem;
+  filter: invert(49%) sepia(53%) saturate(740%) hue-rotate(170deg) brightness(102%) contrast(102%);
+}
 .header-buttons button:hover {
-  background-color: blue;
+  background-color: #339dff;
   color: white;
+}
+.header-buttons button:hover img {
+  filter: invert(93%) sepia(100%) saturate(1%) hue-rotate(183deg) brightness(109%) contrast(101%);
 }
 .home {
   width: 70%;
-  padding: 2rem;
+  padding: 0 4rem 2rem 4rem;
   margin: 0 auto;
 }
 
@@ -166,19 +181,22 @@ p {
 
 .search {
   width: 40%;
-  margin-right: 2rem;
+  margin: 1rem;
+  padding: 1rem 0 1rem;
   height: 1rem;
   display: relative;
 }
+.search img {
+  position: absolute;
+  margin: 0.8rem 0.6rem;
+}
 .search input {
   width: 100%;
-  padding: 1rem;
-  background-image: require("@/assets/icons/search.svg");
-  background-repeat: no-repeat;
-  background-size: 18px 18px;
-  background-position: center;
+  padding: 1rem 0 1rem 2.6rem;
   border-radius: 10px;
-  background-color: lightsteelblue;
+  background-color: #d9d9d9;
+  border: none;
+  font-size: 1rem;
 }
 
 .show {
