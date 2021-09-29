@@ -25,24 +25,19 @@
         <div class="search-icon">
           <img src="@/assets/icons/search.svg" />
         </div>
-        <input
-          type="text"
-          id="search"
-          placeholder="Buscar..."
-          v-model="search"
-        />
+        <input type="text" name="search" id="search" placeholder="Buscar..." v-model="search" />
       </label>
     </header>
     <section>
       <div class="show">
         <img src="@/assets/icons/menu.svg" @click="show('table')" />
         <img src="@/assets/icons/grid.svg" @click="show('grid')" />
-        <p>5</p>
-        <p>10</p>
-        <p>15</p>
+        <p @click="show(5)">5</p>
+        <p @click="show(10)">10</p>
+        <p @click="show(15)">15</p>
       </div>
       <span v-if="table">
-        <TableClients :search="search" />
+        <TableClients :search="search" :number="number" />
       </span>
       <span v-if="grid">
         <ClientCard />
@@ -52,39 +47,49 @@
 </template>
 
 <script>
-import TableClients from '@/components/TableClients.vue'
-import ClientCard from '@/components/ClientCard.vue'
+import TableClients from "@/components/TableClients.vue";
+import ClientCard from "@/components/ClientCard.vue";
 
 export default {
-  name: 'Home',
+  name: "Home",
   components: {
     TableClients,
-    ClientCard,
+    ClientCard
   },
   data() {
     return {
-      search: '',
+      search: "",
       table: true,
       grid: false,
-    }
+      number: ""
+    };
   },
   methods: {
     create() {
-      this.$store.dispatch('drawers/fixed')
-      this.$store.dispatch('drawers/open', { component: 'modal-new' })
+      this.$store.dispatch("drawers/fixed");
+      this.$store.dispatch("drawers/open", { component: "modal-new" });
     },
     show(display) {
-      if (display === 'table') {
-        this.table = true
-        this.grid = false
+      if (display === "table") {
+        this.table = true;
+        this.grid = false;
       }
-      if (display === 'grid') {
-        this.grid = true
-        this.table = false
+      if (display === "grid") {
+        this.grid = true;
+        this.table = false;
       }
-    },
-  },
-}
+      if (display === 5) {
+        this.number = 5;
+      }
+      if (display === 10) {
+        this.number = 10;
+      }
+      if (display === 15) {
+        this.number = 15;
+      }
+    }
+  }
+};
 </script>
 
 <style scoped>
@@ -169,7 +174,7 @@ p {
 .search input {
   width: 100%;
   padding: 1rem;
-  background-image: require('@/assets/icons/search.svg');
+  background-image: require("@/assets/icons/search.svg");
   background-repeat: no-repeat;
   background-size: 18px 18px;
   background-position: center;

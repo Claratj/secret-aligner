@@ -1,5 +1,5 @@
 <template>
-  <div id="nav"><router-link to="/">Home</router-link></div>
+  <div id="nav"></div>
   <router-view />
 </template>
 
@@ -12,9 +12,11 @@
   overflow: hidden;
   width: 100%;
   margin: 0;
+  padding: 0;
 }
 
 #nav {
+  margin: 0;
   padding: 30px;
   background-color: black;
 }
@@ -28,3 +30,4 @@
   color: #42b983;
 }
 </style>
+
