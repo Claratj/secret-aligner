@@ -43,8 +43,8 @@
         <ClientCard />
       </span>
     </section>
-    <div v-if="isOpen" @close="close">
-      <div class="modal-bg" />
+    <div v-if="isOpen">
+      <div class="modal-bg" @close="close" />
       <NewClient />
     </div>
   </div>
@@ -79,6 +79,7 @@ export default {
       this.isOpen = true;
     },
     close() {
+      console.log("llego?");
       this.isOpen = false;
     },
     convertToCSV(obj) {

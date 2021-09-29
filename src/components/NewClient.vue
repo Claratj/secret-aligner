@@ -87,8 +87,8 @@
 
       <footer>
         <button type="submit" class="green">Guardar</button>
-        <button class="red" @click="cancel">Cancelar</button>
-        <button class="blue" @click="clear">Limpiar</button>
+        <button class="red" type="button" @click="cancel">Cancelar</button>
+        <button class="blue" type="button" @click="clear">Limpiar</button>
       </footer>
     </form>
   </div>
@@ -103,7 +103,7 @@ export default {
       apellidos: "",
       fecha_nacimiento: "",
       sexo: "",
-      clínica: "",
+      clinica: "",
       otros_datos: {
         recorte_alineadores: [],
         alineadores_pasivos: "",
@@ -112,7 +112,9 @@ export default {
     };
   },
   methods: {
-    submit() {},
+    submit() {
+      //aqui prepararíamos para pasar al store el payload
+    },
     cancel() {
       this.$emit("close");
     },
@@ -147,6 +149,7 @@ export default {
   padding: 2rem;
   background-color: white;
   border-radius: 30px;
+  z-index: 10;
 }
 header {
   margin: 0;

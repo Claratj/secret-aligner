@@ -1,42 +1,43 @@
 <template>
   <div class="card-container">
     <div class="card" v-for="(patient, index) in patients" :key="index">
-      <div class="card-profile">
-        <figure>
-          <img src="@/assets/icons/avatar.svg" class="avatar" />
-        </figure>
-        <figcaption>
+      <div class="card-main">
+        <div class="card-profile">
+          <figure>
+            <img src="@/assets/icons/avatar.svg" class="avatar" />
+          </figure>
+          <figcaption>
+            <span>
+              {{ patient.datos_paciente.nombre }},
+              {{ patient.datos_paciente.apellidos }}
+            </span>
+            <span class="birthday">
+              <img src="@/assets/icons/calendar.svg" />
+              {{ patient.datos_paciente.fecha_nacimiento }}
+            </span>
+          </figcaption>
+        </div>
+        <div class="card-info">
           <span>
-            {{ patient.datos_paciente.nombre }},
-            {{ patient.datos_paciente.apellidos }}
+            <h4>Clínica:</h4><p>{{ patient.ficha_dental.clinica }}</p>
           </span>
-          <span class="birthday">
-            <img src="@/assets/icons/calendar.svg" />
-            {{ patient.datos_paciente.fecha_nacimiento }}
+          <span>
+            <h4>Tratamiento: </h4><p>{{ patient.ficha_dental.objetivo_tratamiento }} </p></span
+          >
+          <span>
+            <div v-if="patient.ficha_dental.estado === 'solicitado'" class="status-solicitado"> Solicitado </div>
+            <div v-if="patient.ficha_dental.estado === 'facturado'" class="status-facturado"> Facturado </div>
+            <div v-if="patient.ficha_dental.estado === 'planificando'" class="status-planificado"> Planificando </div>
+            <div v-if="patient.ficha_dental.estado === 'fabricando'" class="status-fabricado"> Fabricando </div>
+            <div v-if="patient.ficha_dental.estado === 'enviado'" class="status-enviado"> Enviado </div>
+            <div v-if="patient.ficha_dental.estado === 'aceptado'" class="status-aceptado"> Aceptado </div>
           </span>
-        </figcaption>
+        </div>
       </div>
-      <div class="card-info">
-        <span>
-          <h4>Clínica:</h4><p>{{ patient.ficha_dental.clinica }}</p>
-        </span>
-        <span>
-          <h4>Tratamiento: </h4><p>{{ patient.ficha_dental.objetivo_tratamiento }} </p></span
-        >
-        <span>
-          <div v-if="patient.ficha_dental.estado === 'solicitado'" class="status-solicitado"> Solicitado </div>
-          <div v-if="patient.ficha_dental.estado === 'facturado'" class="status-facturado"> Facturado </div>
-          <div v-if="patient.ficha_dental.estado === 'planificando'" class="status-planificado"> Planificando </div>
-          <div v-if="patient.ficha_dental.estado === 'fabricando'" class="status-fabricado"> Fabricando </div>
-          <div v-if="patient.ficha_dental.estado === 'enviado'" class="status-enviado"> Enviado </div>
-          <div v-if="patient.ficha_dental.estado === 'aceptado'" class="status-aceptado"> Aceptado </div>
-        </span>
-        <select>
-          <option>Acciones</option>
-          <option value="edit">Editar</option>
-          <option value="finish">Finalizar</option>
-          <option value="delete">Borrar</option>
-        </select>
+      <div class="actions">
+        <button value="edit">Editar</button>
+        <button value="finish">Finalizar</button>
+        <button value="delete">Borrar</button>
       </div>
     </div>
   </div>
@@ -67,11 +68,15 @@ export default {
   padding: 1rem;
   margin: 1rem 0;
   background-color: white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  transition: 0.3s;
+}
+.card-main {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  transition: 0.3s;
 }
 .card:hover {
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
@@ -91,7 +96,7 @@ figcaption {
   justify-content: center;
   align-items: flex-start;
   margin-left: 0.5rem;
-  flex: 2;
+  flex: 1;
 }
 h4 {
   margin: 0;
@@ -105,5 +110,19 @@ p {
   border-radius: 5px;
   padding: 0.4rem;
   font-size: 1rem;
+}
+.actions {
+  width: 100%;
+  margin-top: 0.4rem;
+  display: flex;
+  justify-content: space-between;
+}
+button {
+  width: 100px;
+  padding: 0.6rem;
+  border-radius: 5px;
+  border: none;
+  font-weight: 700;
+  cursor: pointer;
 }
 </style>
