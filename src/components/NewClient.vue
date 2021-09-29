@@ -136,12 +136,11 @@ export default {
 }
 .modal {
   position: fixed;
-  top: 15%;
+  top: 13%;
   left: 37.5%;
   margin-top: -50px;
   margin-left: -50px;
   width: 25%;
-  height: fit-content;
   padding: 2rem;
   background-color: white;
   border-radius: 30px;
