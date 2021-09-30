@@ -77,6 +77,7 @@
             </select>
           </td>
           <div v-if="isOpen">
+            <div class="modal-bg"></div>
             <ClientFile :patient="patient" />
           </div>
         </tr>
@@ -395,6 +396,16 @@ a:hover {
 .active {
   background-color: #339dff;
   color: white;
+}
+.modal-bg {
+  width: 100%;
+  position: absolute;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  background-color: black;
+  opacity: 0.3;
 }
 .modal-patient-pdf {
   cursor: pointer;
