@@ -1,5 +1,9 @@
 <template>
   <div>
+    <div v-if="showFile">
+      <div class="modal-bg" />
+      <ClientFile :client="client" @close-file="closeFile" :key="client" />
+    </div>
     <table>
       <thead>
         <tr>
@@ -31,11 +35,11 @@
       </thead>
       <tbody>
         <tr
-          v-for="(patient, index) in displayedPatients"
-          :key="index"
+          v-for="patient in displayedPatients"
+          :key="patient"
           class="modal-patient-pdf"
           title="Ver ficha paciente"
-          @click="openFile(patient)"
+          @click="openFile(patient, $event)"
         >
           <td>
             <span class="table-card">
@@ -76,14 +80,9 @@
               <option value="delete">Borrar</option>
             </select>
           </td>
-          <div v-if="showFile">
-            <div class="modal-bg" />
-            <ClientFile :client="client" @close-file="closeFile" />
-          </div>
         </tr>
       </tbody>
     </table>
-
     <div class="pagination">
       <div class="pagination-box">
         <a @click.prevent="prev" href="#">
@@ -213,7 +212,8 @@ export default {
     pageSelect(index) {
       this.currentPage = index - 1;
     },
-    openFile(patient) {
+    openFile(patient, $event) {
+      console.log($event.target);
       this.client.nombre = patient.datos_paciente.nombre;
       this.client.apellidos = patient.datos_paciente.apellidos;
       this.client.fecha_nacimiento = patient.datos_paciente.fecha_nacimiento;
@@ -229,6 +229,7 @@ export default {
     closeFile() {
       this.client = "";
       this.showFile = false;
+      console.log(this.client);
     }
   }
 };

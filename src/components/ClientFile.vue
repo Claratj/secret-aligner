@@ -1,10 +1,10 @@
 <template>
   <div>
     <div class="buttons">
-      <button class="red" type="button" @click="download">
+      <button class="red" @click="download">
         <img src="@/assets/icons/disk.svg" />
       </button>
-      <button class="red" type="button" @click="cancel">
+      <button class="red" @click="$emit('close-file')">
         <img src="@/assets/icons/x.svg" />
       </button>
     </div>
@@ -50,7 +50,6 @@
           <div class="info-dental two">
             <p class="text"
               ><b>Recorte de Alineadores</b> <br />
-
               {{ client.otros_datos.recorte_alineadores }}
             </p>
             <p class="text"
@@ -78,9 +77,6 @@ export default {
     client: Object
   },
   methods: {
-    cancel() {
-      this.$emit("close-file");
-    },
     download() {
       //faltaria esto
     }
