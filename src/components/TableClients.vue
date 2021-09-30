@@ -30,7 +30,13 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(patient, index) in displayedPatients" :key="index">
+        <tr
+          v-for="(patient, index) in displayedPatients"
+          :key="index"
+          class="modal-patient-pdf"
+          title="Ficha paciente hover"
+          @click="openFile"
+        >
           <td>
             <span class="table-card">
               <figure>
@@ -70,6 +76,9 @@
               <option value="delete">Borrar</option>
             </select>
           </td>
+          <div v-if="isOpen">
+            <ClientFile :patient="patient" />
+          </div>
         </tr>
       </tbody>
     </table>
@@ -100,9 +109,13 @@
 
 <script>
 import patients from "@/data/patients.json";
+import ClientFile from "@/components/ClientFile.vue";
 
 export default {
   name: "TableClient",
+  components: {
+    ClientFile
+  },
   props: {
     search: String,
     number: Number
@@ -111,7 +124,9 @@ export default {
     return {
       patients: patients,
       currentPage: 0,
-      pageRange: 5
+      pageRange: 5,
+      isOpen: true,
+      patient: ""
     };
   },
   computed: {
@@ -183,6 +198,9 @@ export default {
     },
     pageSelect(index) {
       this.currentPage = index - 1;
+    },
+    openFile() {
+      this.$store.dispatch("index/open", { component: "new-client" });
     }
   }
 };
@@ -199,7 +217,9 @@ table tr {
   flex-direction: row;
   justify-content: space-between;
 }
-
+table tbody tr:hover {
+  background-color: #d9d9d9;
+}
 .table-title {
   padding: 3 0;
   text-align: center;
@@ -237,7 +257,7 @@ table tr {
   text-align: left;
 }
 .birthday {
-  color: #6666;
+  color: rgb(160, 160, 160);
   display: flex;
   align-items: center;
 }
@@ -375,5 +395,8 @@ a:hover {
 .active {
   background-color: #339dff;
   color: white;
+}
+.modal-patient-pdf {
+  cursor: pointer;
 }
 </style>

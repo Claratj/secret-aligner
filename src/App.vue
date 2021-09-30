@@ -1,7 +1,11 @@
 <template>
-  <div id="nav"></div>
+  <div>
+    <div id="nav"></div>
+  </div>
   <router-view />
 </template>
+
+
 
 <style>
 * {
