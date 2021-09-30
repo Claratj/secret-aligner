@@ -8,24 +8,24 @@
         <img src="@/assets/icons/x.svg" />
       </button>
     </div>
-    <div class="modal">
+    <div class="modal" ref="file">
       <div class="container item">
         <div class="one img">
-          <img src="@/assets/icons/avatar.svg" class="patient" />
+          <img src="@/assets/icons/avatar.svg" class="client" />
         </div>
         <div class="two info-personal border-right border-left">
           <p class="sub-item text">
-            {{ patient.ficha_dental.clinica }}
+            {{ client.ficha_dental.clinica }}
           </p>
           <p class="sub-item text">
-            {{ patient.datos_paciente.nombre }}
+            {{ client.datos_paciente.nombre }}
           </p>
           <p class="sub-item text">
-            {{ patient.datos_paciente.apellidos }}
+            {{ client.datos_paciente.apellidos }}
           </p>
           <div class="sex-birth">
-            <span class="border-right text">{{ patient.datos_paciente.sexo }}</span>
-            <span class="text">{{ patient.datos_paciente.fecha_nacimiento }}</span>
+            <span class="border-right text">{{ client.datos_paciente.sexo }}</span>
+            <span class="text">{{ client.datos_paciente.fecha_nacimiento }}</span>
           </div>
         </div>
       </div>
@@ -38,29 +38,29 @@
         </div>
         <div class="item">
           <div class="sub-item">
-            <p class="text">{{ patient.ficha_dental.dientes_no_mover }}</p>
+            <p class="text">{{ client.ficha_dental.dientes_no_mover }}</p>
           </div>
           <div class="sub-item">
-            <p class="text">{{ patient.ficha_dental.estado }}</p>
+            <p class="text">{{ client.ficha_dental.estado }}</p>
           </div>
           <div class="sub-item">
-            <p class="text">{{ patient.ficha_dental.objetivo_tratamiento }}</p>
+            <p class="text">{{ client.ficha_dental.objetivo_tratamiento }}</p>
           </div>
 
           <div class="info-dental two">
             <p class="text"
               ><b>Recorte de Alineadores</b> <br />
 
-              {{ patient.ficha_dental.otros_datos.recorte_alineadores }}
+              {{ client.ficha_dental.otros_datos.recorte_alineadores }}
             </p>
             <p class="text"
               ><b>¿Desea alineadores pasivos?</b> <br />
-              <span v-if="patient.ficha_dental.otros_datos.alineadores_pasivos"> Sí</span>
+              <span v-if="client.ficha_dental.otros_datos.alineadores_pasivos"> Sí</span>
               <span v-else>No</span>
             </p>
             <p class="text"
               ><b>¿Desea SecretRetainer al finalizar?</b> <br />
-              <span v-if="patient.ficha_dental.otros_datos.secretretainer"> Sí</span>
+              <span v-if="client.ficha_dental.otros_datos.secretretainer"> Sí</span>
               <span v-else>No</span>
             </p>
           </div>
@@ -75,13 +75,20 @@
 export default {
   name: "ClientFile",
   props: {
-    patient: Object
+    client: Object
   },
   methods: {
     cancel() {
-      this.$emit("close");
+      this.$emit("close-file");
     },
-    download() {}
+    download() {
+      let w = window.open();
+      w.document.write(this.$refs.file.$el.innerHtml);
+      w.document.close();
+      w.setTimeout(() => {
+        w.print();
+      }, 1000);
+    }
   }
 };
 </script>
@@ -156,7 +163,7 @@ export default {
   justify-content: center;
   align-items: center;
 }
-.patient {
+.client {
   transform: scale(5);
   filter: brightness(0%);
 }

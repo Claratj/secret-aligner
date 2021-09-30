@@ -35,7 +35,7 @@
           :key="index"
           class="modal-patient-pdf"
           title="Ficha paciente hover"
-          @click="openFile"
+          @click="openFile(patient)"
         >
           <td>
             <span class="table-card">
@@ -76,9 +76,9 @@
               <option value="delete">Borrar</option>
             </select>
           </td>
-          <div v-if="isOpen">
-            <div class="modal-bg"></div>
-            <ClientFile :patient="patient" @close="close" />
+          <div v-if="showFile">
+            <div class="modal-bg" />
+            <ClientFile :client="client" :key="index" @close-file="closeFile" />
           </div>
         </tr>
       </tbody>
@@ -126,8 +126,8 @@ export default {
       patients: patients,
       currentPage: 0,
       pageRange: 5,
-      isOpen: true,
-      patient: ""
+      showFile: false,
+      client: ""
     };
   },
   computed: {
@@ -200,8 +200,13 @@ export default {
     pageSelect(index) {
       this.currentPage = index - 1;
     },
-    openFile() {
-      this.$store.dispatch("index/open", { component: "new-client" });
+    openFile(patient) {
+      this.client = patient;
+      this.showFile = true;
+    },
+    closeFile() {
+      console.log("aqui");
+      this.showFile = false;
     }
   }
 };

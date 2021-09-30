@@ -1,6 +1,6 @@
 <template>
   <div class="card-container">
-    <div class="card" v-for="(patient, index) in patients" :key="index">
+    <div class="card" v-for="(patient, index) in patients" :key="index" @click="openFile">
       <div class="card-main">
         <div class="card-profile">
           <figure>
