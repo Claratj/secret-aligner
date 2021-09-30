@@ -69,7 +69,7 @@ export default {
       table: true,
       grid: false,
       isOpen: false,
-      number: "",
+      number: 5,
       patients: patients
     };
   },

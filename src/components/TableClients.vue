@@ -74,21 +74,26 @@
       </tbody>
     </table>
 
-    <nav class="pagination">
-      <ul class="pagination">
-        <li class="">
-          <button type="button" v-if="page != 1" @click="page--"> Previous </button>
-        </li>
-        <li class="">
-          <button type="button" v-for="(p, index) in pages.slice(page - 1, page + 5)" @click="page = p" :key="index">
-            {{ p }}
-          </button>
-        </li>
-        <li class="">
-          <button type="button" @click="page++" v-if="page < pages.length"> Next </button>
-        </li>
-      </ul>
-    </nav>
+    <div class="pagination">
+      <a class="" @click.prevent="prev" href="#">
+        <img src="@/assets/icons/chevron-left.svg" />
+      </a>
+
+      <a
+        v-for="i in displayPageRange"
+        :key="i"
+        :class="{ active: i - 1 === currentPage }"
+        class=""
+        @click.prevent="pageSelect(i)"
+        href="#"
+      >
+        {{ i }}
+      </a>
+
+      <a class="" @click.prevent="next" href="#">
+        <img src="@/assets/icons/chevron-right.svg" />
+      </a>
+    </div>
   </div>
 </template>
 
@@ -104,9 +109,8 @@ export default {
   data() {
     return {
       patients: patients,
-      page: 1,
-      perPage: 5,
-      pages: []
+      currentPage: 0,
+      pageRange: 5
     };
   },
   computed: {
@@ -133,27 +137,51 @@ export default {
         return true;
       });
     },
+    pages() {
+      return Math.ceil(this.filteredPatients.length / this.number);
+    },
+    displayPageRange() {
+      const half = Math.ceil(this.pageRange / 2);
+      let start, end;
+
+      if (this.pages < this.pageRange) {
+        start = 1;
+        end = this.pages;
+      } else if (this.currentPage < half) {
+        start = 1;
+        end = start + this.pageRange - 1;
+      } else if (this.pages - half < this.currentPage) {
+        end = this.pages;
+        start = end - this.pageRange + 1;
+      } else {
+        start = this.currentPage - half + 1;
+        end = this.currentPage + half;
+      }
+
+      let indexes = [];
+      for (let i = start; i <= end; i++) {
+        indexes.push(i);
+      }
+      return indexes;
+    },
     displayedPatients: function () {
-      return this.paginate(this.filteredPatients);
+      const head = this.currentPage * this.number;
+      return this.filteredPatients.slice(head, head + this.number);
     }
   },
-  created() {
-    this.setPages();
-  },
   methods: {
-    setPages() {
-      console.log("esto está pasando?");
-      let numberOfPages = Math.ceil(this.filteredPatients.length / this.perPage);
-      for (let index = 1; index <= numberOfPages; index++) {
-        this.pages.push(index);
+    prev() {
+      if (0 < this.currentPage) {
+        this.currentPage--;
       }
     },
-    paginate(filtered) {
-      let page = this.page;
-      let perPage = this.number || this.perPage;
-      let from = page * perPage - perPage;
-      let to = page * perPage;
-      return filtered.slice(from, to);
+    next() {
+      if (this.currentPage < this.pages - 1) {
+        this.currentPage++;
+      }
+    },
+    pageSelect(index) {
+      this.currentPage = index - 1;
     }
   }
 };
@@ -310,5 +338,28 @@ select {
   text-align: center;
   color: white;
   background-color: #00c49a;
+}
+.pagination {
+  width: 100%;
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.pagination ul {
+  width: fit-content;
+  padding: 0;
+  border: 2px solid #6666;
+  border-radius: 5px;
+}
+.page {
+  background-color: white;
+}
+.page button {
+  height: 100%;
+  background-color: white;
+}
+.active {
+  background-color: #339dff;
 }
 </style>
