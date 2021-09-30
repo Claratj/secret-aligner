@@ -1,6 +1,6 @@
 <template>
   <div class="card-container">
-    <div class="card" v-for="(patient, index) in patients" :key="index" @click="openFile">
+    <div class="card" v-for="(patient, index) in patients" :key="index" @click="openFile(patient)">
       <div class="card-main">
         <div class="card-profile">
           <figure>
@@ -40,18 +40,56 @@
         <button value="delete" class="red">Borrar</button>
       </div>
     </div>
+    <div v-if="showFile">
+      <div class="modal-bg" />
+      <ClientFile :client="client" @close-file="showFile = false" :key="client" />
+    </div>
   </div>
 </template>
 
 <script>
 import patients from "@/data/patients.json";
+import ClientFile from "@/components/ClientFile.vue";
 
 export default {
   name: "ClientCard",
+  components: {
+    ClientFile
+  },
   data() {
     return {
-      patients: patients
+      patients: patients,
+      showFile: false,
+      client: {
+        nombre: "",
+        apellidos: "",
+        fecha_nacimiento: "",
+        sexo: "",
+        clinica: "",
+        estado: "",
+        objetivo_tratamiento: "",
+        otros_datos: {
+          recorte_alineadores: [],
+          alineadores_pasivos: "",
+          secretretainer: ""
+        }
+      }
     };
+  },
+  methods: {
+    openFile(patient) {
+      this.client.nombre = patient.datos_paciente.nombre;
+      this.client.apellidos = patient.datos_paciente.apellidos;
+      this.client.fecha_nacimiento = patient.datos_paciente.fecha_nacimiento;
+      this.client.sexo = patient.datos_paciente.sexo;
+      this.client.clinica = patient.ficha_dental.clinica;
+      this.client.estado = patient.ficha_dental.estado;
+      this.client.estado = patient.ficha_dental.objetivo_tratamiento;
+      this.client.otros_datos.recorte_alineadores = patient.ficha_dental.otros_datos.recorte_alineadores;
+      this.client.otros_datos.alineadores_pasivos = patient.ficha_dental.otros_datos.alineadores_pasivos;
+      this.client.otros_datos.secretretainer = patient.ficha_dental.otros_datos.secretretainer;
+      this.showFile = true;
+    }
   }
 };
 </script>
@@ -72,6 +110,7 @@ export default {
   display: flex;
   flex-direction: column;
   transition: 0.3s;
+  cursor: pointer;
 }
 .card-main {
   display: flex;

@@ -35,7 +35,7 @@
           :key="patient"
           class="modal-patient-pdf"
           title="Ver ficha paciente"
-          @click="openFile(patient, $event)"
+          @click="openFile(patient)"
         >
           <td>
             <span class="table-card">
@@ -212,8 +212,7 @@ export default {
     pageSelect(index) {
       this.currentPage = index - 1;
     },
-    openFile(patient, $event) {
-      console.log($event.target);
+    openFile(patient) {
       this.client.nombre = patient.datos_paciente.nombre;
       this.client.apellidos = patient.datos_paciente.apellidos;
       this.client.fecha_nacimiento = patient.datos_paciente.fecha_nacimiento;
