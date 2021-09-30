@@ -95,6 +95,7 @@ export default {
         fecha_nacimiento: "",
         sexo: "",
         clinica: "",
+        dientes_no_mover: "",
         estado: "",
         objetivo_tratamiento: "",
         otros_datos: {
@@ -182,6 +183,7 @@ export default {
       this.client.sexo = patient.datos_paciente.sexo;
       this.client.clinica = patient.ficha_dental.clinica;
       this.client.estado = patient.ficha_dental.estado;
+      this.client.dientes_no_mover = patient.ficha_dental.dientes_no_mover;
       this.client.estado = patient.ficha_dental.objetivo_tratamiento;
       this.client.otros_datos.recorte_alineadores = patient.ficha_dental.otros_datos.recorte_alineadores;
       this.client.otros_datos.alineadores_pasivos = patient.ficha_dental.otros_datos.alineadores_pasivos;

@@ -41,10 +41,10 @@
             <p class="text">{{ client.dientes_no_mover }}</p>
           </div>
           <div class="sub-item">
-            <p class="text">{{ client.estado }}</p>
+            <p class="text">{{ client.objetivo_tratamiento }}</p>
           </div>
           <div class="sub-item">
-            <p class="text">{{ client.objetivo_tratamiento }}</p>
+            <p class="text">{{ client.estado }}</p>
           </div>
 
           <div class="info-dental two">
@@ -78,7 +78,7 @@ export default {
   },
   methods: {
     download() {
-      //faltaria esto
+      //faltaria
     }
   }
 };
