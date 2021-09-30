@@ -30,14 +30,8 @@
         </tr>
       </thead>
       <tbody>
-        <tr
-          v-for="patient in displayedPatients"
-          :key="patient"
-          class="modal-patient-pdf"
-          title="Ver ficha paciente"
-          @click="openFile(patient)"
-        >
-          <td>
+        <tr v-for="patient in displayedPatients" :key="patient" class="modal-patient-pdf" title="Ver ficha paciente">
+          <td @click="openFile(patient)">
             <span class="table-card">
               <figure>
                 <img src="@/assets/icons/avatar.svg" class="avatar" />
@@ -54,13 +48,13 @@
               </figcaption>
             </span>
           </td>
-          <td class="table-content">
+          <td class="table-content" @click="openFile(patient)">
             {{ patient.ficha_dental.clinica }}
           </td>
-          <td class="table-content">
+          <td class="table-content" @click="openFile(patient)">
             {{ patient.ficha_dental.objetivo_tratamiento }}
           </td>
-          <td class="table-content">
+          <td class="table-content" @click="openFile(patient)">
             <div v-if="patient.ficha_dental.estado === 'solicitado'" class="status-solicitado"> Solicitado </div>
             <div v-if="patient.ficha_dental.estado === 'facturado'" class="status-facturado"> Facturado </div>
             <div v-if="patient.ficha_dental.estado === 'planificando'" class="status-planificado"> Planificando </div>
@@ -157,7 +151,7 @@ export default {
         const search = this.search.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
         const text = [nombre, apellidos]
           .filter((value) => value)
-          .join("")
+          .join(" ")
           .toLowerCase()
           .normalize("NFD")
           .replace(/[\u0300-\u036f]/g, "");
