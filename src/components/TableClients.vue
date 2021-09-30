@@ -1,9 +1,5 @@
 <template>
   <div>
-    <div v-if="showFile">
-      <div class="modal-bg" />
-      <ClientFile :client="client" @close-file="closeFile" :key="client" />
-    </div>
     <table>
       <thead>
         <tr>
@@ -83,6 +79,10 @@
         </tr>
       </tbody>
     </table>
+    <div v-if="showFile">
+      <div class="modal-bg" />
+      <ClientFile :client="client" @close-file="showFile = false" :key="client" />
+    </div>
     <div class="pagination">
       <div class="pagination-box">
         <a @click.prevent="prev" href="#">
@@ -225,11 +225,6 @@ export default {
       this.client.otros_datos.alineadores_pasivos = patient.ficha_dental.otros_datos.alineadores_pasivos;
       this.client.otros_datos.secretretainer = patient.ficha_dental.otros_datos.secretretainer;
       this.showFile = true;
-    },
-    closeFile() {
-      this.client = "";
-      this.showFile = false;
-      console.log(this.client);
     }
   }
 };
