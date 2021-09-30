@@ -37,7 +37,7 @@
         <p @click="show(15)">15</p>
       </div>
       <span v-if="table">
-        <TableClients :search="search" :number="number" />
+        <TableClients :search="search" :number="number" :key="number" />
       </span>
       <span v-if="grid">
         <ClientCard />
