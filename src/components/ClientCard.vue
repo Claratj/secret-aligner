@@ -1,48 +1,71 @@
 <template>
-  <div class="card-container">
-    <div class="card" v-for="(patient, index) in patients" :key="index" @click="openFile(patient)">
-      <div class="card-main">
-        <div class="card-profile">
-          <figure>
-            <img src="@/assets/icons/avatar.svg" class="avatar" />
-          </figure>
-          <figcaption>
+  <div>
+    <div class="card-container">
+      <div class="card" v-for="patient in displayedPatients" :key="patient" @click="openFile(patient)">
+        <div class="card-main">
+          <div class="card-profile">
+            <figure>
+              <img src="@/assets/icons/avatar.svg" class="avatar" />
+            </figure>
+            <figcaption>
+              <span>
+                {{ patient.datos_paciente.nombre }},
+                {{ patient.datos_paciente.apellidos }}
+              </span>
+              <span class="birthday">
+                <img src="@/assets/icons/calendar.svg" />
+                {{ patient.datos_paciente.fecha_nacimiento }}
+              </span>
+            </figcaption>
+          </div>
+          <div class="card-info">
             <span>
-              {{ patient.datos_paciente.nombre }},
-              {{ patient.datos_paciente.apellidos }}
+              <h4>Clínica:</h4><p>{{ patient.ficha_dental.clinica }}</p>
             </span>
-            <span class="birthday">
-              <img src="@/assets/icons/calendar.svg" />
-              {{ patient.datos_paciente.fecha_nacimiento }}
+            <span>
+              <h4>Tratamiento: </h4><p>{{ patient.ficha_dental.objetivo_tratamiento }} </p></span
+            >
+            <span>
+              <div v-if="patient.ficha_dental.estado === 'solicitado'" class="status-solicitado"> Solicitado </div>
+              <div v-if="patient.ficha_dental.estado === 'facturado'" class="status-facturado"> Facturado </div>
+              <div v-if="patient.ficha_dental.estado === 'planificando'" class="status-planificado"> Planificando </div>
+              <div v-if="patient.ficha_dental.estado === 'fabricando'" class="status-fabricado"> Fabricando </div>
+              <div v-if="patient.ficha_dental.estado === 'enviado'" class="status-enviado"> Enviado </div>
+              <div v-if="patient.ficha_dental.estado === 'aceptado'" class="status-aceptado"> Aceptado </div>
             </span>
-          </figcaption>
+          </div>
         </div>
-        <div class="card-info">
-          <span>
-            <h4>Clínica:</h4><p>{{ patient.ficha_dental.clinica }}</p>
-          </span>
-          <span>
-            <h4>Tratamiento: </h4><p>{{ patient.ficha_dental.objetivo_tratamiento }} </p></span
-          >
-          <span>
-            <div v-if="patient.ficha_dental.estado === 'solicitado'" class="status-solicitado"> Solicitado </div>
-            <div v-if="patient.ficha_dental.estado === 'facturado'" class="status-facturado"> Facturado </div>
-            <div v-if="patient.ficha_dental.estado === 'planificando'" class="status-planificado"> Planificando </div>
-            <div v-if="patient.ficha_dental.estado === 'fabricando'" class="status-fabricado"> Fabricando </div>
-            <div v-if="patient.ficha_dental.estado === 'enviado'" class="status-enviado"> Enviado </div>
-            <div v-if="patient.ficha_dental.estado === 'aceptado'" class="status-aceptado"> Aceptado </div>
-          </span>
+        <div class="actions">
+          <button value="edit" class="blue">Editar</button>
+          <button value="finish" class="green">Finalizar</button>
+          <button value="delete" class="red">Borrar</button>
         </div>
       </div>
-      <div class="actions">
-        <button value="edit" class="blue">Editar</button>
-        <button value="finish" class="green">Finalizar</button>
-        <button value="delete" class="red">Borrar</button>
+      <div v-if="showFile">
+        <div class="modal-bg" />
+        <ClientFile :client="client" @close-file="showFile = false" :key="client" />
       </div>
     </div>
-    <div v-if="showFile">
-      <div class="modal-bg" />
-      <ClientFile :client="client" @close-file="showFile = false" :key="client" />
+    <div class="pagination">
+      <div class="pagination-box">
+        <a @click.prevent="prev" href="#">
+          <img src="@/assets/icons/chevron-left.svg" />
+        </a>
+
+        <a
+          v-for="i in displayPageRange"
+          :key="i"
+          :class="{ active: i - 1 === currentPage }"
+          @click.prevent="pageSelect(i)"
+          href="#"
+        >
+          {{ i }}
+        </a>
+
+        <a @click.prevent="next" href="#">
+          <img src="@/assets/icons/chevron-right.svg" />
+        </a>
+      </div>
     </div>
   </div>
 </template>
@@ -56,9 +79,15 @@ export default {
   components: {
     ClientFile
   },
+  props: {
+    search: String,
+    number: Number
+  },
   data() {
     return {
       patients: patients,
+      currentPage: 0,
+      pageRange: 5,
       showFile: false,
       client: {
         nombre: "",
@@ -76,7 +105,76 @@ export default {
       }
     };
   },
+  computed: {
+    filteredPatients: function () {
+      const filtered = [];
+      for (const key in this.patients) {
+        if (Object.hasOwnProperty.call(this.patients, key)) {
+          filtered.push(this.patients[key]);
+        }
+      }
+      return filtered.filter((patient) => {
+        const nombre = patient.datos_paciente.nombre;
+        const apellidos = patient.datos_paciente.apellidos;
+        const search = this.search.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        const text = [nombre, apellidos]
+          .filter((value) => value)
+          .join("")
+          .toLowerCase()
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "");
+        if (!text.match(search.toLowerCase())) {
+          return false;
+        }
+        return true;
+      });
+    },
+    pages() {
+      return Math.ceil(this.filteredPatients.length / this.number);
+    },
+    displayPageRange() {
+      const half = Math.ceil(this.pageRange / 2);
+      let start, end;
+
+      if (this.pages < this.pageRange) {
+        start = 1;
+        end = this.pages;
+      } else if (this.currentPage < half) {
+        start = 1;
+        end = start + this.pageRange - 1;
+      } else if (this.pages - half < this.currentPage) {
+        end = this.pages;
+        start = end - this.pageRange + 1;
+      } else {
+        start = this.currentPage - half + 1;
+        end = this.currentPage + half;
+      }
+
+      let indexes = [];
+      for (let i = start; i <= end; i++) {
+        indexes.push(i);
+      }
+      return indexes;
+    },
+    displayedPatients: function () {
+      const head = this.currentPage * this.number;
+      return this.filteredPatients.slice(head, head + this.number);
+    }
+  },
   methods: {
+    prev() {
+      if (0 < this.currentPage) {
+        this.currentPage--;
+      }
+    },
+    next() {
+      if (this.currentPage < this.pages - 1) {
+        this.currentPage++;
+      }
+    },
+    pageSelect(index) {
+      this.currentPage = index - 1;
+    },
     openFile(patient) {
       this.client.nombre = patient.datos_paciente.nombre;
       this.client.apellidos = patient.datos_paciente.apellidos;

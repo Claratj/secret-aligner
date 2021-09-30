@@ -314,14 +314,6 @@ select {
   padding: 0.4rem;
   font-size: 1rem;
 }
-.pagination {
-  width: 70%;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  text-decoration: none;
-}
 .status-solicitado {
   width: 100px;
   padding: 0.8rem;

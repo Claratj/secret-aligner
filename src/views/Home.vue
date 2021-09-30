@@ -40,7 +40,7 @@
         <TableClients :search="search" :number="number" :key="number" />
       </span>
       <span v-if="grid">
-        <ClientCard />
+        <ClientCard :search="search" :number="number" :key="number" />
       </span>
     </section>
     <div v-if="isOpen">
