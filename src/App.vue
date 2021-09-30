@@ -37,5 +37,14 @@ button {
   font-weight: 700;
   cursor: pointer;
 }
-
+.modal-bg {
+  width: 100%;
+  position: absolute;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  background-color: black;
+  opacity: 0.3;
+}
 </style>

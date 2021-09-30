@@ -1,59 +1,69 @@
 <template>
-  <div class="modal">
-    <div class="container item">
-      <div class="one img">
-        <img src="@/assets/icons/avatar.svg" class="patient" />
-      </div>
-      <div class="two info-personal border-right border-left">
-        <p class="sub-item text">
-          {{ patient.ficha_dental.clinica }}
-        </p>
-        <p class="sub-item text">
-          {{ patient.datos_paciente.nombre }}
-        </p>
-        <p class="sub-item text">
-          {{ patient.datos_paciente.apellidos }}
-        </p>
-        <div class="sex-birth">
-          <span class="border-right text">{{ patient.datos_paciente.sexo }}</span>
-          <span class="text">{{ patient.datos_paciente.fecha_nacimiento }}</span>
-        </div>
-      </div>
+  <div>
+    <div class="buttons">
+      <button class="red" type="button" @click="download">
+        <img src="@/assets/icons/disk.svg" />
+      </button>
+      <button class="red" type="button" @click="cancel">
+        <img src="@/assets/icons/x.svg" />
+      </button>
     </div>
-    <div class="container">
-      <div class="item">
-        <p class="sub-item text-title"> Dientes No Mover </p>
-        <div>
-          <img src="@/assets/maxilar.jpg" class="maxilar" />
+    <div class="modal">
+      <div class="container item">
+        <div class="one img">
+          <img src="@/assets/icons/avatar.svg" class="patient" />
+        </div>
+        <div class="two info-personal border-right border-left">
+          <p class="sub-item text">
+            {{ patient.ficha_dental.clinica }}
+          </p>
+          <p class="sub-item text">
+            {{ patient.datos_paciente.nombre }}
+          </p>
+          <p class="sub-item text">
+            {{ patient.datos_paciente.apellidos }}
+          </p>
+          <div class="sex-birth">
+            <span class="border-right text">{{ patient.datos_paciente.sexo }}</span>
+            <span class="text">{{ patient.datos_paciente.fecha_nacimiento }}</span>
+          </div>
         </div>
       </div>
-      <div class="item">
-        <div class="sub-item">
-          <p class="text">{{ patient.ficha_dental.dientes_no_mover }}</p>
+      <div class="container">
+        <div class="item">
+          <p class="sub-item text-title"> Dientes No Mover </p>
+          <div>
+            <img src="@/assets/maxilar.jpg" class="maxilar" />
+          </div>
         </div>
-        <div class="sub-item">
-          <p class="text">{{ patient.ficha_dental.estado }}</p>
-        </div>
-        <div class="sub-item">
-          <p class="text">{{ patient.ficha_dental.objetivo_tratamiento }}</p>
-        </div>
+        <div class="item">
+          <div class="sub-item">
+            <p class="text">{{ patient.ficha_dental.dientes_no_mover }}</p>
+          </div>
+          <div class="sub-item">
+            <p class="text">{{ patient.ficha_dental.estado }}</p>
+          </div>
+          <div class="sub-item">
+            <p class="text">{{ patient.ficha_dental.objetivo_tratamiento }}</p>
+          </div>
 
-        <div class="info-dental two">
-          <p class="text"
-            ><b>Recorte de Alineadores</b> <br />
+          <div class="info-dental two">
+            <p class="text"
+              ><b>Recorte de Alineadores</b> <br />
 
-            {{ patient.ficha_dental.otros_datos.recorte_alineadores }}
-          </p>
-          <p class="text"
-            ><b>¿Desea alineadores pasivos?</b> <br />
-            <span v-if="patient.ficha_dental.otros_datos.alineadores_pasivos"> Sí</span>
-            <span v-else>No</span>
-          </p>
-          <p class="text"
-            ><b>¿Desea SecretRetainer al finalizar?</b> <br />
-            <span v-if="patient.ficha_dental.otros_datos.secretretainer"> Sí</span>
-            <span v-else>No</span>
-          </p>
+              {{ patient.ficha_dental.otros_datos.recorte_alineadores }}
+            </p>
+            <p class="text"
+              ><b>¿Desea alineadores pasivos?</b> <br />
+              <span v-if="patient.ficha_dental.otros_datos.alineadores_pasivos"> Sí</span>
+              <span v-else>No</span>
+            </p>
+            <p class="text"
+              ><b>¿Desea SecretRetainer al finalizar?</b> <br />
+              <span v-if="patient.ficha_dental.otros_datos.secretretainer"> Sí</span>
+              <span v-else>No</span>
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -66,11 +76,31 @@ export default {
   name: "ClientFile",
   props: {
     patient: Object
+  },
+  methods: {
+    cancel() {
+      this.$emit("close");
+    },
+    download() {}
   }
 };
 </script>
 
 <style scope>
+.buttons {
+  position: absolute;
+  top: 3%;
+  right: 5%;
+}
+.buttons button {
+  background-color: transparent;
+  width: 3rem;
+  margin: 0 0.2rem;
+}
+.buttons button img {
+  transform: scale(1.2);
+  filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(305deg) brightness(103%) contrast(103%);
+}
 .modal {
   position: fixed;
   top: 13%;
@@ -82,6 +112,7 @@ export default {
   background-color: white;
   z-index: 10;
 }
+
 .container {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
