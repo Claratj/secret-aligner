@@ -120,7 +120,7 @@ export default {
         const search = this.search.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
         const text = [nombre, apellidos]
           .filter((value) => value)
-          .join("")
+          .join(" ")
           .toLowerCase()
           .normalize("NFD")
           .replace(/[\u0300-\u036f]/g, "");
