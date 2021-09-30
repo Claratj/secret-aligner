@@ -7,6 +7,9 @@
 * {
   margin: 0;
 }
+li {
+  list-style: none;
+}
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

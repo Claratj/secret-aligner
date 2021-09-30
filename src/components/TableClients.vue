@@ -30,7 +30,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(patient, index) in filteredPatients" :key="index">
+        <tr v-for="(patient, index) in displayedPatients" :key="index">
           <td>
             <span class="table-card">
               <figure>
@@ -76,26 +76,16 @@
 
     <nav class="pagination">
       <ul class="pagination">
-        <li class="page-item">
-          <button type="button" class="page-link" @click="page--">
-            <img src="@/assets/icons/chevron-left.svg" />
+        <li class="">
+          <button type="button" v-if="page != 1" @click="page--"> Previous </button>
+        </li>
+        <li class="">
+          <button type="button" v-for="(p, index) in pages.slice(page - 1, page + 5)" @click="page = p" :key="index">
+            {{ p }}
           </button>
         </li>
-        <li class="page-item">
-          <button
-            type="button"
-            class="page-link"
-            v-for="pageNumber in pages.slice(page - 1, page + 5)"
-            @click="page = pageNumber"
-            :key="pageNumber"
-          >
-            {{ pageNumber }}
-          </button>
-        </li>
-        <li class="page-item">
-          <button type="button" @click="page++" v-if="page < pages.length" class="page-link">
-            <img src="@/assets/icons/chevron-right.svg" />
-          </button>
+        <li class="">
+          <button type="button" @click="page++" v-if="page < pages.length"> Next </button>
         </li>
       </ul>
     </nav>
@@ -115,7 +105,7 @@ export default {
     return {
       patients: patients,
       page: 1,
-      perPage: this.number,
+      perPage: 5,
       pages: []
     };
   },
@@ -144,27 +134,26 @@ export default {
       });
     },
     displayedPatients: function () {
-      return this.paginate(this.patients);
+      return this.paginate(this.filteredPatients);
     }
   },
-  watch: {
-    posts() {
-      this.setPages();
-    }
+  created() {
+    this.setPages();
   },
   methods: {
     setPages() {
-      let numberOfPages = Math.ceil(this.patients.length / this.perPage);
+      console.log("esto está pasando?");
+      let numberOfPages = Math.ceil(this.filteredPatients.length / this.perPage);
       for (let index = 1; index <= numberOfPages; index++) {
         this.pages.push(index);
       }
     },
-    paginate(patients) {
+    paginate(filtered) {
       let page = this.page;
-      let perPage = this.perPage;
+      let perPage = this.number || this.perPage;
       let from = page * perPage - perPage;
       let to = page * perPage;
-      return patients.slice(from, to);
+      return filtered.slice(from, to);
     }
   }
 };
