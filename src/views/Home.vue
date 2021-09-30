@@ -79,7 +79,6 @@ export default {
       this.isOpen = true;
     },
     close() {
-      console.log("llego?");
       this.isOpen = false;
     },
     convertToCSV(obj) {

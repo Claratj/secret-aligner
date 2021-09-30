@@ -1,7 +1,6 @@
 <template>
   <div>
     <table>
-      {{ this.search }}
       <thead>
         <tr>
           <th class="table-title">
@@ -31,7 +30,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(patient, index) in patients" :key="index">
+        <tr v-for="(patient, index) in filteredPatients" :key="index">
           <td>
             <span class="table-card">
               <figure>
@@ -121,6 +120,29 @@ export default {
     };
   },
   computed: {
+    filteredPatients: function () {
+      const filtered = [];
+      for (const key in this.patients) {
+        if (Object.hasOwnProperty.call(this.patients, key)) {
+          filtered.push(this.patients[key]);
+        }
+      }
+      return filtered.filter((patient) => {
+        const nombre = patient.datos_paciente.nombre;
+        const apellidos = patient.datos_paciente.apellidos;
+        const search = this.search.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        const text = [nombre, apellidos]
+          .filter((value) => value)
+          .join("")
+          .toLowerCase()
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "");
+        if (!text.match(search.toLowerCase())) {
+          return false;
+        }
+        return true;
+      });
+    },
     displayedPatients: function () {
       return this.paginate(this.patients);
     }
