@@ -15,17 +15,17 @@
         </div>
         <div class="two info-personal border-right border-left">
           <p class="sub-item text">
-            {{ client.ficha_dental.clinica }}
+            {{ client.clinica }}
           </p>
           <p class="sub-item text">
-            {{ client.datos_paciente.nombre }}
+            {{ client.nombre }}
           </p>
           <p class="sub-item text">
-            {{ client.datos_paciente.apellidos }}
+            {{ client.apellidos }}
           </p>
           <div class="sex-birth">
-            <span class="border-right text">{{ client.datos_paciente.sexo }}</span>
-            <span class="text">{{ client.datos_paciente.fecha_nacimiento }}</span>
+            <span class="border-right text">{{ client.sexo }}</span>
+            <span class="text">{{ client.fecha_nacimiento }}</span>
           </div>
         </div>
       </div>
@@ -38,29 +38,29 @@
         </div>
         <div class="item">
           <div class="sub-item">
-            <p class="text">{{ client.ficha_dental.dientes_no_mover }}</p>
+            <p class="text">{{ client.dientes_no_mover }}</p>
           </div>
           <div class="sub-item">
-            <p class="text">{{ client.ficha_dental.estado }}</p>
+            <p class="text">{{ client.estado }}</p>
           </div>
           <div class="sub-item">
-            <p class="text">{{ client.ficha_dental.objetivo_tratamiento }}</p>
+            <p class="text">{{ client.objetivo_tratamiento }}</p>
           </div>
 
           <div class="info-dental two">
             <p class="text"
               ><b>Recorte de Alineadores</b> <br />
 
-              {{ client.ficha_dental.otros_datos.recorte_alineadores }}
+              {{ client.otros_datos.recorte_alineadores }}
             </p>
             <p class="text"
               ><b>¿Desea alineadores pasivos?</b> <br />
-              <span v-if="client.ficha_dental.otros_datos.alineadores_pasivos"> Sí</span>
+              <span v-if="client.otros_datos.alineadores_pasivos"> Sí</span>
               <span v-else>No</span>
             </p>
             <p class="text"
               ><b>¿Desea SecretRetainer al finalizar?</b> <br />
-              <span v-if="client.ficha_dental.otros_datos.secretretainer"> Sí</span>
+              <span v-if="client.otros_datos.secretretainer"> Sí</span>
               <span v-else>No</span>
             </p>
           </div>
@@ -72,6 +72,7 @@
 
 
 <script>
+import { jsPDF } from "jspdf";
 export default {
   name: "ClientFile",
   props: {
@@ -82,12 +83,9 @@ export default {
       this.$emit("close-file");
     },
     download() {
-      let w = window.open();
-      w.document.write(this.$refs.file.$el.innerHtml);
-      w.document.close();
-      w.setTimeout(() => {
-        w.print();
-      }, 1000);
+      const doc = new jsPDF();
+      doc.text("Ficha paciente", 40, 40);
+      doc.save("a4.pdf");
     }
   }
 };

@@ -34,7 +34,7 @@
           v-for="(patient, index) in displayedPatients"
           :key="index"
           class="modal-patient-pdf"
-          title="Ficha paciente hover"
+          title="Ver ficha paciente"
           @click="openFile(patient)"
         >
           <td>
@@ -78,7 +78,7 @@
           </td>
           <div v-if="showFile">
             <div class="modal-bg" />
-            <ClientFile :client="client" :key="index" @close-file="closeFile" />
+            <ClientFile :client="client" @close-file="closeFile" />
           </div>
         </tr>
       </tbody>
@@ -127,7 +127,20 @@ export default {
       currentPage: 0,
       pageRange: 5,
       showFile: false,
-      client: ""
+      client: {
+        nombre: "",
+        apellidos: "",
+        fecha_nacimiento: "",
+        sexo: "",
+        clinica: "",
+        estado: "",
+        objetivo_tratamiento: "",
+        otros_datos: {
+          recorte_alineadores: [],
+          alineadores_pasivos: "",
+          secretretainer: ""
+        }
+      }
     };
   },
   computed: {
@@ -201,11 +214,20 @@ export default {
       this.currentPage = index - 1;
     },
     openFile(patient) {
-      this.client = patient;
+      this.client.nombre = patient.datos_paciente.nombre;
+      this.client.apellidos = patient.datos_paciente.apellidos;
+      this.client.fecha_nacimiento = patient.datos_paciente.fecha_nacimiento;
+      this.client.sexo = patient.datos_paciente.sexo;
+      this.client.clinica = patient.ficha_dental.clinica;
+      this.client.estado = patient.ficha_dental.estado;
+      this.client.estado = patient.ficha_dental.objetivo_tratamiento;
+      this.client.otros_datos.recorte_alineadores = patient.ficha_dental.otros_datos.recorte_alineadores;
+      this.client.otros_datos.alineadores_pasivos = patient.ficha_dental.otros_datos.alineadores_pasivos;
+      this.client.otros_datos.secretretainer = patient.ficha_dental.otros_datos.secretretainer;
       this.showFile = true;
     },
     closeFile() {
-      console.log("aqui");
+      this.client = "";
       this.showFile = false;
     }
   }
