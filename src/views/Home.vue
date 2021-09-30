@@ -156,11 +156,14 @@ export default {
       if (display === "table") {
         this.table = true;
         this.grid = false;
+        this.number = 5;
       }
       if (display === "grid") {
         this.grid = true;
         this.table = false;
+        this.number = 6;
       }
+
       if (display === 5) {
         this.number = 5;
       }
