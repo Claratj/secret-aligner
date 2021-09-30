@@ -87,7 +87,7 @@ export default {
     return {
       patients: patients,
       currentPage: 0,
-      pageRange: 5,
+      pageRange: 6,
       showFile: false,
       client: {
         nombre: "",

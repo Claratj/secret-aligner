@@ -32,9 +32,16 @@
       <div class="show">
         <img src="@/assets/icons/menu.svg" @click="show('table')" />
         <img src="@/assets/icons/grid.svg" @click="show('grid')" />
-        <p @click="show(5)">5</p>
-        <p @click="show(10)">10</p>
-        <p @click="show(15)">15</p>
+        <span v-if="table" class="show-num">
+          <p @click="show(5)">5</p>
+          <p @click="show(10)">10</p>
+          <p @click="show(15)">15</p>
+        </span>
+        <span v-if="grid" class="show-num">
+          <p @click="show(6)">6</p>
+          <p @click="show(12)">12</p>
+          <p @click="show(18)">18</p>
+        </span>
       </div>
       <span v-if="table">
         <TableClients :search="search" :number="number" :key="number" />
@@ -163,6 +170,15 @@ export default {
       if (display === 15) {
         this.number = 15;
       }
+      if (display === 6) {
+        this.number = 6;
+      }
+      if (display === 12) {
+        this.number = 12;
+      }
+      if (display === 18) {
+        this.number = 18;
+      }
     }
   }
 };
@@ -275,13 +291,15 @@ p {
   border: none;
   font-size: 1rem;
 }
-
-.show {
-  margin: 1rem 0;
+.show,
+.show-num {
   padding: 0 2rem;
   display: flex;
   flex-direction: row;
   align-items: center;
+}
+.show {
+  margin: 1rem 0;
 }
 .show img {
   padding: 0 0.4rem;
