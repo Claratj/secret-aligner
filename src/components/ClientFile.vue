@@ -8,7 +8,7 @@
         <img src="@/assets/icons/x.svg" />
       </button>
     </div>
-    <div class="modal" ref="file">
+    <div class="modal">
       <div class="container item">
         <div class="one img">
           <img src="@/assets/icons/avatar.svg" class="client" />
@@ -72,7 +72,6 @@
 
 
 <script>
-import { jsPDF } from "jspdf";
 export default {
   name: "ClientFile",
   props: {
@@ -83,9 +82,7 @@ export default {
       this.$emit("close-file");
     },
     download() {
-      const doc = new jsPDF();
-      doc.text("Ficha paciente", 40, 40);
-      doc.save("a4.pdf");
+      //faltaria esto
     }
   }
 };
