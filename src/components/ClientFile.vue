@@ -46,7 +46,6 @@
           <div class="sub-item">
             <p class="text">{{ client.estado }}</p>
           </div>
-
           <div class="info-dental two">
             <p class="text"
               ><b>Recorte de Alineadores</b> <br />
