@@ -1,41 +1,59 @@
 <template>
   <div class="modal">
-    <div class="container">
-      <div class="one item">
-        <img src="@/assets/icons/avatar.svg" class="avatar" />
+    <div class="container item">
+      <div class="one img">
+        <img src="@/assets/icons/avatar.svg" class="patient" />
       </div>
-      <div class="two info-personal item">
-        <span class="sub-item">
+      <div class="two info-personal border-right border-left">
+        <p class="sub-item text">
           {{ patient.ficha_dental.clinica }}
-        </span>
-        <span class="sub-item">
+        </p>
+        <p class="sub-item text">
           {{ patient.datos_paciente.nombre }}
-        </span>
-        <span class="sub-item">
+        </p>
+        <p class="sub-item text">
           {{ patient.datos_paciente.apellidos }}
-        </span>
-        <div>
-          <span class="border-right">{{ patient.datos_paciente.sexo }}</span>
-          <span>{{ patient.datos_paciente.fecha_nacimiento }}</span>
+        </p>
+        <div class="sex-birth">
+          <span class="border-right text">{{ patient.datos_paciente.sexo }}</span>
+          <span class="text">{{ patient.datos_paciente.fecha_nacimiento }}</span>
         </div>
       </div>
     </div>
     <div class="container">
       <div class="item">
-        <p class="sub-item"> Dientes no mover </p>
-        <div class="img">
-          <img src="@/assets/icons/avatar.svg" class="avatar" />
+        <p class="sub-item text-title"> Dientes No Mover </p>
+        <div>
+          <img src="@/assets/maxilar.jpg" class="maxilar" />
         </div>
       </div>
       <div class="item">
-        <div class="sub-item">aqui irian los dientes a no mover</div>
-        <div class="sub-item">{{ patient.ficha_dental.estado }}</div>
-        <div class="sub-item">{{ patient.ficha_dental.objetivo_tratamiento }}</div>
+        <div class="sub-item">
+          <p class="text">{{ patient.ficha_dental.dientes_no_mover }}</p>
+        </div>
+        <div class="sub-item">
+          <p class="text">{{ patient.ficha_dental.estado }}</p>
+        </div>
+        <div class="sub-item">
+          <p class="text">{{ patient.ficha_dental.objetivo_tratamiento }}</p>
+        </div>
 
         <div class="info-dental two">
-          <span>Recorte de Alineadores {{ patient.ficha_dental.otros_datos.recorte_alineadores }} </span>
-          <span>¿Desea alineadores pasivos? {{ patient.ficha_dental.otros_datos.alineadores_pasivos }} </span>
-          <span>¿Desea SecretRetainer al finalizar? {{ patient.ficha_dental.otros_datos.secretretainer }} </span>
+          <p class="text"
+            ><b>Recorte de Alineadores</b> <br />
+
+            {{ patient.ficha_dental.otros_datos.recorte_alineadores }}
+          </p>
+          <p class="text"
+            ><b>¿Desea alineadores pasivos?</b> <br />
+            <span v-if="patient.ficha_dental.otros_datos.alineadores_pasivos"> Sí</span>
+            <span v-else>No</span>
+          </p>
+          <p class="text"
+            ><b>¿Desea SecretRetainer al finalizar?</b> <br />
+            <span v-if="patient.ficha_dental.otros_datos.secretretainer"> Sí</span>
+            <span v-else>No</span>
+          </p>
         </div>
       </div>
     </div>
@@ -52,14 +70,14 @@ export default {
 };
 </script>
 
-<style>
+<style scope>
 .modal {
   position: fixed;
   top: 13%;
-  left: 37.5%;
+  left: 30%;
   margin-top: -50px;
   margin-left: -50px;
-  width: 25%;
+  width: 40%;
   padding: 2rem;
   background-color: white;
   z-index: 10;
@@ -96,13 +114,37 @@ export default {
 .border-right {
   border-right: 1px solid black;
 }
-.img {
+.border-left {
+  border-left: 1px solid black;
 }
-.avatar {
-  filter: invert(40%) sepia(6%) saturate(0%) hue-rotate(217deg) brightness(94%) contrast(83%);
+
+.img {
+  width: 400px;
+  height: 10rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.patient {
+  transform: scale(5);
+  filter: brightness(0%);
 }
 .info-personal {
   display: flex;
   flex-direction: column;
+}
+.maxilar {
+  width: 400px;
+}
+.text,
+.text-title {
+  padding: 0.8rem 0.4rem;
+}
+.text-title {
+  font-weight: 700;
+}
+.sex-birth {
+  display: flex;
+  flex-direction: row;
 }
 </style>
