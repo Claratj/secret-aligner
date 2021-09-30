@@ -75,24 +75,25 @@
     </table>
 
     <div class="pagination">
-      <a class="" @click.prevent="prev" href="#">
-        <img src="@/assets/icons/chevron-left.svg" />
-      </a>
+      <div class="pagination-box">
+        <a @click.prevent="prev" href="#">
+          <img src="@/assets/icons/chevron-left.svg" />
+        </a>
 
-      <a
-        v-for="i in displayPageRange"
-        :key="i"
-        :class="{ active: i - 1 === currentPage }"
-        class=""
-        @click.prevent="pageSelect(i)"
-        href="#"
-      >
-        {{ i }}
-      </a>
+        <a
+          v-for="i in displayPageRange"
+          :key="i"
+          :class="{ active: i - 1 === currentPage }"
+          @click.prevent="pageSelect(i)"
+          href="#"
+        >
+          {{ i }}
+        </a>
 
-      <a class="" @click.prevent="next" href="#">
-        <img src="@/assets/icons/chevron-right.svg" />
-      </a>
+        <a @click.prevent="next" href="#">
+          <img src="@/assets/icons/chevron-right.svg" />
+        </a>
+      </div>
     </div>
   </div>
 </template>
@@ -341,25 +342,38 @@ select {
 }
 .pagination {
   width: 100%;
-  margin-top: 1rem;
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+}
+.pagination-box {
+  width: fit-content;
+  height: 3rem;
+  border: 2px solid #6666;
+  border-radius: 5px;
   display: flex;
   flex-direction: row;
   justify-content: center;
+  align-items: center;
 }
-.pagination ul {
-  width: fit-content;
-  padding: 0;
-  border: 2px solid #6666;
+a {
+  text-decoration: none;
+  padding: 1rem;
+  color: #6666;
+  font-weight: 700;
+}
+a img {
+  filter: invert(40%) sepia(6%) saturate(0%) hue-rotate(217deg) brightness(94%) contrast(83%);
+}
+
+a:hover {
+  background-color: white;
+  border: 2px solid #339dff;
+  color: #339dff;
   border-radius: 5px;
-}
-.page {
-  background-color: white;
-}
-.page button {
-  height: 100%;
-  background-color: white;
 }
 .active {
   background-color: #339dff;
+  color: white;
 }
 </style>
